@@ -24,8 +24,7 @@ export interface Vehicle {
   speed: number;
 }
 
-const socket: Socket = io('http://localhost:5000');
-
+const socket = io('http://localhost:5000', { autoConnect: false });
 export default function App() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
