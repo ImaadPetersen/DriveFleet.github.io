@@ -5,7 +5,8 @@ import {
   BatteryCharging, Clock, ChevronRight, User, LogIn, LogOut, Star, 
   Award, HeartHandshake, HelpCircle, MessageSquare, Sparkles, Send,
   ShoppingCart, Trash2, CreditCard, ArrowLeft, Check, Lock, Gauge, UserPlus,
-  Compass, Globe, Building2, Phone, ExternalLink, Info, CheckCircle
+  Compass, Globe, Building2, Phone, ExternalLink, Info, CheckCircle, Sliders,
+  SlidersHorizontal, ChevronDown, Eye, ShieldCheck, Sparkle
 } from 'lucide-react';
 
 // Cape Town Branch Model
@@ -26,7 +27,7 @@ interface Vehicle {
   make: string;
   model: string;
   year: number;
-  category: string;
+  category: 'Sports' | 'EV / Hybrid' | 'Luxury' | 'SUV';
   origin: 'Japan' | 'Germany' | 'USA' | 'Other';
   dailyRate: number; // in ZAR (R)
   purchasePrice: number; // in ZAR (R)
@@ -90,7 +91,7 @@ const capeTownBranches: Branch[] = [
     area: 'Airport / Matroosfontein',
     address: 'Matroosfontein, Cape Town International Airport, 7525',
     phone: '+27 (0)21 937 1200',
-    hours: '24/7 Operations',
+    hours: '24/7 VIP Concierge',
     lat: -33.9715,
     lng: 18.6021
   },
@@ -132,18 +133,18 @@ const initialVehicles: Vehicle[] = [
   {
     id: 101,
     make: 'Nissan',
-    model: 'GT-R Nismo',
+    model: 'GT-R Nismo Track Edition',
     year: 2024,
     category: 'Sports',
     origin: 'Japan',
-    dailyRate: 6500,
-    purchasePrice: 4200000,
+    dailyRate: 8500,
+    purchasePrice: 4800000,
     transmission: '6-Speed Dual-Clutch',
-    fuelType: 'Gasoline',
+    fuelType: 'Twin-Turbo V6',
     seats: 4,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 95,
+    imageUrl: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 98,
     speed: 0,
     lat: -33.9056,
     lng: 18.4211,
@@ -157,23 +158,23 @@ const initialVehicles: Vehicle[] = [
   {
     id: 102,
     make: 'Toyota',
-    model: 'GR Supra 3.0',
+    model: 'GR Supra 3.0 Performance',
     year: 2024,
     category: 'Sports',
     origin: 'Japan',
-    dailyRate: 3200,
-    purchasePrice: 1450000,
+    dailyRate: 3800,
+    purchasePrice: 1550000,
     transmission: '6-Speed Manual',
-    fuelType: 'Gasoline',
+    fuelType: 'Inline-6 Turbo',
     seats: 2,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80',
     fuelPercent: 88,
     speed: 0,
     lat: -33.9512,
     lng: 18.3780,
     locationName: 'Camps Bay Lounge',
-    rating: 4.8,
+    rating: 4.9,
     horsepower: 382,
     zeroToHundred: '3.9s',
     topSpeed: '250 km/h',
@@ -182,45 +183,45 @@ const initialVehicles: Vehicle[] = [
   {
     id: 103,
     make: 'Honda',
-    model: 'NSX Type S',
+    model: 'NSX Type S Hybrid Supercar',
     year: 2023,
     category: 'EV / Hybrid',
     origin: 'Japan',
-    dailyRate: 7800,
-    purchasePrice: 3850000,
+    dailyRate: 9200,
+    purchasePrice: 4200000,
     transmission: '9-Speed Dual-Clutch',
-    fuelType: 'Hybrid',
+    fuelType: 'Twin-Turbo V6 Hybrid',
     seats: 2,
     status: 'rented',
-    imageUrl: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 72,
-    speed: 85,
+    imageUrl: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 74,
+    speed: 112,
     lat: -33.9249,
     lng: 18.4241,
-    locationName: 'In Transit (N2 Highway)',
-    rating: 4.9,
+    locationName: 'En Route (Chapman\'s Peak Drive)',
+    rating: 5.0,
     horsepower: 600,
     zeroToHundred: '2.9s',
     topSpeed: '307 km/h',
     rangeOrConsumption: '10.2 L / 100 km'
   },
 
-  // --- GERMAN ---
+  // --- GERMANY ---
   {
     id: 201,
     make: 'Porsche',
-    model: '911 GT3 RS',
+    model: '911 GT3 RS Weissach',
     year: 2024,
     category: 'Sports',
     origin: 'Germany',
-    dailyRate: 8500,
-    purchasePrice: 4800000,
-    transmission: 'PDK Automatic',
-    fuelType: 'Gasoline',
+    dailyRate: 11500,
+    purchasePrice: 5900000,
+    transmission: '7-Speed PDK Dual-Clutch',
+    fuelType: 'Naturally Aspirated Flat-6',
     seats: 2,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 92,
+    imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 95,
     speed: 0,
     lat: -33.9056,
     lng: 18.4211,
@@ -234,17 +235,17 @@ const initialVehicles: Vehicle[] = [
   {
     id: 202,
     make: 'BMW',
-    model: 'i7 M70 xDrive',
+    model: 'i7 M70 xDrive Luxury Sedan',
     year: 2024,
     category: 'Luxury',
     origin: 'Germany',
-    dailyRate: 4500,
-    purchasePrice: 3250000,
-    transmission: 'Automatic',
-    fuelType: 'Electric',
+    dailyRate: 5800,
+    purchasePrice: 3850000,
+    transmission: 'Direct Drive',
+    fuelType: 'Pure Electric',
     seats: 5,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80',
     fuelPercent: 100,
     speed: 0,
     lat: -33.8922,
@@ -254,7 +255,7 @@ const initialVehicles: Vehicle[] = [
     horsepower: 650,
     zeroToHundred: '3.7s',
     topSpeed: '250 km/h',
-    rangeOrConsumption: '475 km range'
+    rangeOrConsumption: '560 km range'
   },
   {
     id: 203,
@@ -263,14 +264,14 @@ const initialVehicles: Vehicle[] = [
     year: 2024,
     category: 'Luxury',
     origin: 'Germany',
-    dailyRate: 7200,
-    purchasePrice: 3900000,
-    transmission: '9-Speed Automatic',
-    fuelType: 'Hybrid',
+    dailyRate: 8900,
+    purchasePrice: 4400000,
+    transmission: '9-Speed AMG Speedshift',
+    fuelType: 'V8 Hybrid',
     seats: 4,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 95,
+    imageUrl: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 92,
     speed: 0,
     lat: -33.9818,
     lng: 18.4650,
@@ -284,17 +285,17 @@ const initialVehicles: Vehicle[] = [
   {
     id: 204,
     make: 'Audi',
-    model: 'RS e-tron GT',
+    model: 'RS e-tron GT Ice Race Edition',
     year: 2024,
     category: 'EV / Hybrid',
     origin: 'Germany',
-    dailyRate: 5100,
-    purchasePrice: 2900000,
+    dailyRate: 6200,
+    purchasePrice: 3300000,
     transmission: '2-Speed Automatic',
-    fuelType: 'Electric',
+    fuelType: 'Pure Electric',
     seats: 5,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80',
     fuelPercent: 91,
     speed: 0,
     lat: -33.9715,
@@ -304,25 +305,25 @@ const initialVehicles: Vehicle[] = [
     horsepower: 637,
     zeroToHundred: '3.3s',
     topSpeed: '250 km/h',
-    rangeOrConsumption: '400 km range'
+    rangeOrConsumption: '472 km range'
   },
 
   // --- USA ---
   {
     id: 301,
     make: 'Tesla',
-    model: 'Model S Plaid',
+    model: 'Model S Plaid Tri-Motor',
     year: 2024,
     category: 'EV / Hybrid',
     origin: 'USA',
-    dailyRate: 3800,
-    purchasePrice: 2200000,
-    transmission: 'Automatic',
-    fuelType: 'Electric',
+    dailyRate: 4900,
+    purchasePrice: 2600000,
+    transmission: 'Direct Drive',
+    fuelType: 'Pure Electric',
     seats: 5,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 98,
+    imageUrl: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 96,
     speed: 0,
     lat: -33.9056,
     lng: 18.4211,
@@ -331,27 +332,27 @@ const initialVehicles: Vehicle[] = [
     horsepower: 1020,
     zeroToHundred: '2.1s',
     topSpeed: '322 km/h',
-    rangeOrConsumption: '578 km range'
+    rangeOrConsumption: '600 km range'
   },
   {
     id: 302,
     make: 'Rivian',
-    model: 'R1S Quad-Motor',
+    model: 'R1S Quad-Motor Adventure',
     year: 2024,
     category: 'SUV',
     origin: 'USA',
-    dailyRate: 3500,
-    purchasePrice: 1950000,
-    transmission: 'Automatic',
-    fuelType: 'Electric',
+    dailyRate: 4500,
+    purchasePrice: 2400000,
+    transmission: 'Direct Drive',
+    fuelType: 'Pure Electric',
     seats: 7,
     status: 'rented',
-    imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 64,
-    speed: 92,
+    imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 68,
+    speed: 84,
     lat: -33.9350,
     lng: 18.4720,
-    locationName: 'In Transit (M5 Highway)',
+    locationName: 'En Route (M5 Highway North)',
     rating: 4.8,
     horsepower: 835,
     zeroToHundred: '3.1s',
@@ -361,18 +362,18 @@ const initialVehicles: Vehicle[] = [
   {
     id: 303,
     make: 'Ford',
-    model: 'Mustang Mach-E GT',
+    model: 'Mustang Mach-E GT Performance',
     year: 2024,
     category: 'EV / Hybrid',
     origin: 'USA',
-    dailyRate: 2300,
-    purchasePrice: 1250000,
-    transmission: 'Automatic',
-    fuelType: 'Electric',
+    dailyRate: 3100,
+    purchasePrice: 1650000,
+    transmission: 'Direct Drive',
+    fuelType: 'Pure Electric',
     seats: 5,
     status: 'available',
-    imageUrl: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=800&q=80',
-    fuelPercent: 82,
+    imageUrl: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80',
+    fuelPercent: 88,
     speed: 0,
     lat: -33.8922,
     lng: 18.5085,
@@ -389,18 +390,26 @@ const initialReviews: Review[] = [
   {
     id: 1,
     author: 'Elena Rostova',
-    role: 'Executive Member',
+    role: 'Managing Director, Horizon Global',
     rating: 5,
-    comment: 'The Nissan GT-R Nismo pickup from the V&A Waterfront branch was flawless. DriveFleet is setting a brand new standard for luxury mobility in Cape Town!',
-    date: 'Yesterday'
+    comment: 'The Nissan GT-R Nismo delivery to our private yacht at V&A Waterfront was flawless. DriveFleet provides an unmatched ultra-luxury mobility experience in South Africa.',
+    date: '2 hours ago'
   },
   {
     id: 2,
     author: 'Marcus Vance',
-    role: 'Verified Driver',
+    role: 'Private Equity Investor',
     rating: 5,
-    comment: 'Extremely fluid app experience! Tracked the Rivian telemetry in real-time while cruising up Signal Hill.',
-    date: '3 days ago'
+    comment: 'Real-time telemetry tracking on the Porsche GT3 RS while taking the coastline drive to Cape Point gave complete peace of mind. Immaculate condition.',
+    date: '2 days ago'
+  },
+  {
+    id: 3,
+    author: 'Dr. Aris Thorne',
+    role: 'Chief Technology Officer',
+    rating: 5,
+    comment: 'Seamless checkout and immediate doorstep drop-off at Camps Bay. The BMW i7 M70 was charged to 100% and pre-conditioned perfectly.',
+    date: '4 days ago'
   }
 ];
 
@@ -410,13 +419,18 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedOrigin, setSelectedOrigin] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'fleet' | 'map' | 'branches' | 'about' | 'reviews' | 'cart' | 'checkout'>('fleet');
+  const [activeTab, setActiveTab] = useState<'fleet' | 'map' | 'branches' | 'specs' | 'reviews' | 'cart' | 'checkout'>('fleet');
   
   // Cart State
   const [cart, setCart] = useState<CartItem[]>([]);
 
   // Auth state
-  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>({
+    name: 'Alexander Wright',
+    email: 'alexander@wright.capetown',
+    role: 'VIP Black Member',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+  });
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authEmail, setAuthEmail] = useState('');
   const [authName, setAuthName] = useState('');
@@ -434,12 +448,12 @@ export default function App() {
 
   // Checkout Form State
   const [deliveryMethod, setDeliveryMethod] = useState<'delivery' | 'pickup'>('delivery');
-  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('42 Victoria Road, Camps Bay, Cape Town');
   const [selectedBranch, setSelectedBranch] = useState(capeTownBranches[0].id);
-  const [cardName, setCardName] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
+  const [cardName, setCardName] = useState('Alexander Wright');
+  const [cardNumber, setCardNumber] = useState('•••• •••• •••• 9842');
+  const [cardExpiry, setCardExpiry] = useState('11/28');
+  const [cardCvc, setCardCvc] = useState('•••');
   const [orderComplete, setOrderComplete] = useState(false);
   const [placedOrderId, setPlacedOrderId] = useState('');
 
@@ -451,19 +465,19 @@ export default function App() {
   const [newVehicle, setNewVehicle] = useState({
     make: '',
     model: '',
-    year: 2024,
-    category: 'EV / Hybrid',
-    origin: 'Japan' as 'Japan' | 'Germany' | 'USA' | 'Other',
-    dailyRate: 2800,
-    purchasePrice: 1100000,
-    imageUrl: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80',
-    seats: 5,
-    fuelType: 'Electric',
+    year: 2025,
+    category: 'EV / Hybrid' as 'EV / Hybrid' | 'Sports' | 'Luxury' | 'SUV',
+    origin: 'Germany' as 'Japan' | 'Germany' | 'USA' | 'Other',
+    dailyRate: 6500,
+    purchasePrice: 2900000,
+    imageUrl: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80',
+    seats: 4,
+    fuelType: 'Pure Electric',
     locationName: 'V&A Waterfront Hub',
-    horsepower: 450,
-    zeroToHundred: '3.8s',
-    topSpeed: '240 km/h',
-    rangeOrConsumption: '450 km range'
+    horsepower: 650,
+    zeroToHundred: '3.1s',
+    topSpeed: '280 km/h',
+    rangeOrConsumption: '500 km range'
   });
 
   // Dynamic Live Simulation for Vehicle Telemetry
@@ -473,7 +487,7 @@ export default function App() {
         if (v.status === 'rented') {
           return {
             ...v,
-            speed: Math.floor(60 + Math.random() * 40),
+            speed: Math.floor(75 + Math.random() * 45),
             fuelPercent: Math.max(5, v.fuelPercent - (Math.random() > 0.6 ? 1 : 0)),
             lat: v.lat + (Math.random() * 0.002 - 0.001),
             lng: v.lng + (Math.random() * 0.002 - 0.001)
@@ -485,7 +499,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const categories = ['All', 'EV / Hybrid', 'Luxury', 'SUV', 'Sports'];
+  const categories = ['All', 'Sports', 'EV / Hybrid', 'Luxury', 'SUV'];
   const origins = ['All', 'Japan', 'Germany', 'USA'];
 
   const filteredVehicles = vehicles.filter(v => {
@@ -502,7 +516,7 @@ export default function App() {
       name: authName || authEmail.split('@')[0],
       email: authEmail,
       role: 'Cape Town VIP Member',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
     });
     setIsAuthModalOpen(false);
     setAuthEmail('');
@@ -531,7 +545,7 @@ export default function App() {
     setTimeout(() => {
       setBookingSuccess(false);
       setActiveTab('cart');
-    }, 1000);
+    }, 800);
   };
 
   const calculateSubtotal = () => {
@@ -545,12 +559,12 @@ export default function App() {
 
   const subtotal = calculateSubtotal();
   const estimatedVAT = subtotal * 0.15; // 15% South African VAT
-  const deliveryFee = cart.length > 0 && deliveryMethod === 'delivery' ? 750 : 0;
+  const deliveryFee = cart.length > 0 && deliveryMethod === 'delivery' ? 950 : 0;
   const grandTotal = subtotal + estimatedVAT + deliveryFee;
 
   const handleFinalCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedId = 'CPT-' + Math.floor(100000 + Math.random() * 900000);
+    const generatedId = 'CPT-EX-9' + Math.floor(10000 + Math.random() * 90000);
     setPlacedOrderId(generatedId);
     
     const cartVehicleIds = cart.map(c => c.vehicle.id);
@@ -565,7 +579,7 @@ export default function App() {
     const created: Vehicle = {
       id: Date.now(),
       make: newVehicle.make || 'Custom',
-      model: newVehicle.model || 'Edition',
+      model: newVehicle.model || 'Special Edition',
       year: Number(newVehicle.year),
       category: newVehicle.category,
       origin: newVehicle.origin,
@@ -611,75 +625,90 @@ export default function App() {
   const totalFleetValue = vehicles.reduce((acc, curr) => acc + curr.purchasePrice, 0);
 
   return (
-    <div className="min-h-screen bg-[#06080d] text-slate-100 selection:bg-cyan-500 selection:text-black font-sans antialiased relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#030712] text-slate-100 selection:bg-cyan-400 selection:text-black font-sans antialiased relative overflow-x-hidden">
       
-      {/* Background Ambient Lights */}
-      <div className="fixed top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[180px] pointer-events-none" />
-      <div className="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[180px] pointer-events-none" />
+      {/* LUXURY BACKGROUND AMBIENT GLOWS */}
+      <div className="fixed top-0 left-1/3 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[220px] pointer-events-none" />
+      <div className="fixed bottom-0 right-1/4 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-[200px] pointer-events-none" />
+      <div className="fixed top-1/2 left-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[180px] pointer-events-none" />
 
-      {/* NAVIGATION BAR */}
-      <header className="sticky top-0 z-40 bg-[#06080d]/85 backdrop-blur-2xl border-b border-cyan-950/60 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      {/* VIP TOP CONCIERGE ANNOUNCEMENT BAR */}
+      <div className="bg-slate-950 border-b border-cyan-950/80 px-6 py-2 text-[11px] font-semibold text-slate-400">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-slate-300">Cape Town VIP Doorstep Delivery Active</span>
+            <span className="text-slate-600">•</span>
+            <span className="text-cyan-400 font-mono">100% Insured Fleet</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-6 text-slate-400">
+            <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-cyan-400" /> Concierge Hotline: +27 (0)21 400 1000</span>
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Fully Insured</span>
+          </div>
+        </div>
+      </div>
+
+      {/* EXECUTIVE NAVIGATION BAR */}
+      <header className="sticky top-0 z-40 bg-[#030712]/90 backdrop-blur-3xl border-b border-cyan-950/80 px-6 py-4 shadow-2xl">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
           
-          {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('fleet')}>
-            <div className="relative p-2.5 bg-gradient-to-tr from-cyan-500 via-teal-500 to-emerald-400 rounded-2xl text-slate-950 shadow-lg shadow-cyan-500/20">
+          {/* Logo & Identity */}
+          <div className="flex items-center gap-3.5 cursor-pointer" onClick={() => setActiveTab('fleet')}>
+            <div className="relative p-3 bg-gradient-to-tr from-cyan-500 via-teal-400 to-emerald-400 rounded-2xl text-slate-950 shadow-xl shadow-cyan-500/25 ring-1 ring-white/20">
               <Car className="w-6 h-6 stroke-[2.5]" />
-              <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
-              </span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-black tracking-tight text-white">DriveFleet</h1>
-                <span className="px-2 py-0.5 text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full shadow-[0_0_12px_rgba(6,182,212,0.15)]">CAPE TOWN</span>
+                <h1 className="text-xl font-black tracking-tight text-white uppercase font-mono">DriveFleet</h1>
+                <span className="px-2 py-0.5 text-[9px] font-black bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full tracking-widest">
+                  CAPE TOWN
+                </span>
               </div>
-              <p className="text-xs text-slate-400">Japan • Germany • USA Luxury Fleet</p>
+              <p className="text-[11px] text-slate-400 font-medium">Ultra-Luxury & Supercar Mobility</p>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <div className="hidden xl:flex items-center p-1 bg-slate-900/90 border border-cyan-950/80 rounded-2xl">
+          <div className="hidden xl:flex items-center p-1.5 bg-slate-950/80 border border-cyan-950 rounded-2xl shadow-inner">
             <button 
               onClick={() => setActiveTab('fleet')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'fleet' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
+                activeTab === 'fleet' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Car className="w-4 h-4" /> Global Catalog
             </button>
             <button 
               onClick={() => setActiveTab('map')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'map' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
+                activeTab === 'map' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Navigation className="w-4 h-4" /> Live Tracking Map
+              <Navigation className="w-4 h-4" /> GPS Radar Map
             </button>
             <button 
               onClick={() => setActiveTab('branches')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'branches' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
+                activeTab === 'branches' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Building2 className="w-4 h-4" /> Cape Town Branches
+              <Building2 className="w-4 h-4" /> Cape Town Depots
             </button>
             <button 
-              onClick={() => setActiveTab('about')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'about' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
+              onClick={() => setActiveTab('specs')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
+                activeTab === 'specs' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Sparkles className="w-4 h-4" /> Tech Specs
+              <Gauge className="w-4 h-4" /> Performance Tech
             </button>
             <button 
               onClick={() => setActiveTab('reviews')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'reviews' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
+                activeTab === 'reviews' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
-              <MessageSquare className="w-4 h-4" /> Reviews
+              <MessageSquare className="w-4 h-4" /> Concierge Reviews
             </button>
           </div>
 
@@ -687,7 +716,7 @@ export default function App() {
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setIsAddVehicleOpen(true)}
-              className="hidden sm:flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-slate-800 border border-cyan-950 text-xs font-bold text-slate-200 rounded-xl transition"
+              className="hidden sm:flex items-center gap-2 px-3.5 py-2.5 bg-slate-900 hover:bg-slate-800 border border-cyan-950 text-xs font-bold text-slate-200 rounded-xl transition shadow-md"
             >
               <Plus className="w-4 h-4 text-cyan-400" /> Add Vehicle
             </button>
@@ -695,26 +724,27 @@ export default function App() {
             {/* Cart Trigger */}
             <button
               onClick={() => setActiveTab('cart')}
-              className="relative p-2.5 bg-slate-900 hover:bg-slate-800 border border-cyan-950 rounded-xl text-slate-200 transition"
+              className="relative p-3 bg-slate-900 hover:bg-slate-800 border border-cyan-950 rounded-xl text-slate-200 transition shadow-md group"
             >
-              <ShoppingCart className="w-5 h-5 text-cyan-400" />
+              <ShoppingCart className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition" />
               {cart.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#06080d]">
+                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#030712] shadow-md">
                   {cart.length}
                 </span>
               )}
             </button>
 
             {currentUser ? (
-              <div className="flex items-center gap-3 bg-slate-900/90 border border-cyan-950 p-1.5 pl-3 rounded-2xl">
-                <div>
+              <div className="flex items-center gap-3 bg-slate-950 border border-cyan-950 p-1.5 pl-3 rounded-2xl">
+                <img src={currentUser.avatar} alt={currentUser.name} className="w-8 h-8 rounded-xl object-cover ring-1 ring-cyan-500/50" />
+                <div className="hidden md:block">
                   <p className="text-xs font-bold text-white leading-tight">{currentUser.name}</p>
-                  <p className="text-[10px] text-cyan-400 font-medium">{currentUser.role}</p>
+                  <p className="text-[10px] text-cyan-400 font-semibold">{currentUser.role}</p>
                 </div>
                 <button 
                   onClick={() => setCurrentUser(null)} 
                   title="Logout"
-                  className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition"
+                  className="p-2 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white rounded-xl transition"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -722,9 +752,9 @@ export default function App() {
             ) : (
               <button 
                 onClick={() => setIsAuthModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 rounded-xl text-xs font-black text-slate-950 transition shadow-lg shadow-cyan-500/20"
+                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 rounded-xl text-xs font-black text-slate-950 transition shadow-xl shadow-cyan-500/20"
               >
-                <LogIn className="w-4 h-4" /> Login / Sign Up
+                <LogIn className="w-4 h-4" /> VIP Login
               </button>
             )}
           </div>
@@ -732,51 +762,45 @@ export default function App() {
         </div>
       </header>
 
-      {/* METRIC DASHBOARD BANNER */}
+      {/* CINEMATIC HERO & STATS BANNER */}
       {activeTab !== 'cart' && activeTab !== 'checkout' && (
-        <section className="max-w-7xl mx-auto px-6 pt-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <section className="relative max-w-7xl mx-auto px-6 pt-8 pb-4">
+          <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-cyan-950/80 rounded-3xl p-8 relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
             
-            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
+            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
               <div>
-                <p className="text-xs font-medium text-slate-400">Available Vehicles</p>
-                <h3 className="text-2xl font-bold text-white mt-1">{availableCount} <span className="text-xs text-slate-500 font-normal">/ {vehicles.length} Total</span></h3>
+                <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono font-bold tracking-widest uppercase mb-2">
+                  <Sparkle className="w-4 h-4" /> South Africa&apos;s Flagship Mobility Platform
+                </div>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                  Experience DriveFleet <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">Cape Town</span>
+                </h2>
+                <p className="text-xs md:text-sm text-slate-400 mt-2 max-w-2xl leading-relaxed">
+                  Precision engineered vehicles from Japan, Germany, and the USA. Available for high-tier daily reservation or direct executive acquisition with real-time telemetry.
+                </p>
               </div>
-              <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl">
-                <Zap className="w-5 h-5" />
+
+              {/* Realtime Quick Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
+                <div className="bg-slate-950/80 border border-cyan-950/80 p-3.5 rounded-2xl text-center min-w-[110px]">
+                  <span className="text-[10px] text-slate-400 font-semibold uppercase block">Available</span>
+                  <span className="text-xl font-bold font-mono text-emerald-400">{availableCount} / {vehicles.length}</span>
+                </div>
+                <div className="bg-slate-950/80 border border-cyan-950/80 p-3.5 rounded-2xl text-center min-w-[110px]">
+                  <span className="text-[10px] text-slate-400 font-semibold uppercase block">Locations</span>
+                  <span className="text-xl font-bold font-mono text-cyan-400">5 Depots</span>
+                </div>
+                <div className="bg-slate-950/80 border border-cyan-950/80 p-3.5 rounded-2xl text-center min-w-[110px]">
+                  <span className="text-[10px] text-slate-400 font-semibold uppercase block">Fleet Value</span>
+                  <span className="text-xl font-bold font-mono text-amber-400">R{(totalFleetValue / 1000000).toFixed(1)}M</span>
+                </div>
+                <div className="bg-slate-950/80 border border-cyan-950/80 p-3.5 rounded-2xl text-center min-w-[110px]">
+                  <span className="text-[10px] text-slate-400 font-semibold uppercase block">Telemetry</span>
+                  <span className="text-xl font-bold font-mono text-teal-400">Live 2.5s</span>
+                </div>
               </div>
             </div>
-
-            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
-              <div>
-                <p className="text-xs font-medium text-slate-400">Cape Town Network</p>
-                <h3 className="text-2xl font-bold text-white mt-1">5 Branches</h3>
-              </div>
-              <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-xl">
-                <Building2 className="w-5 h-5" />
-              </div>
-            </div>
-
-            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
-              <div>
-                <p className="text-xs font-medium text-slate-400">Total Fleet Valuation</p>
-                <h3 className="text-2xl font-bold text-white mt-1">R{(totalFleetValue / 1000000).toFixed(1)}M ZAR</h3>
-              </div>
-              <div className="p-3 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-xl">
-                <Activity className="w-5 h-5" />
-              </div>
-            </div>
-
-            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
-              <div>
-                <p className="text-xs font-medium text-slate-400">Global Origins</p>
-                <h3 className="text-2xl font-bold text-white mt-1">Japan • DE • USA</h3>
-              </div>
-              <div className="p-3 bg-teal-500/10 border border-teal-500/20 text-teal-400 rounded-xl">
-                <Globe className="w-5 h-5" />
-              </div>
-            </div>
-
           </div>
         </section>
       )}
@@ -788,19 +812,21 @@ export default function App() {
         {activeTab === 'fleet' && (
           <div>
             {/* Search & Filter Bar */}
-            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-8">
+            <div className="bg-slate-950/80 backdrop-blur-xl border border-cyan-950/80 rounded-2xl p-4 mb-8 shadow-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
               
-              {/* Category Filters */}
+              {/* Category Filter */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-slate-500 font-bold uppercase tracking-wider mr-2">Category:</span>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest mr-2 flex items-center gap-1.5">
+                  <Filter className="w-3.5 h-3.5 text-cyan-400" /> Category:
+                </span>
                 {categories.map(cat => (
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 ${
                       selectedCategory === cat
-                        ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20'
-                        : 'bg-slate-900/80 text-slate-400 hover:bg-slate-800 border border-cyan-950'
+                        ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20'
+                        : 'bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800'
                     }`}
                   >
                     {cat}
@@ -808,16 +834,16 @@ export default function App() {
                 ))}
               </div>
 
-              {/* Origin Filters & Search */}
+              {/* Origin & Search */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-slate-900/90 p-1 border border-cyan-950 rounded-xl">
+                <div className="flex items-center gap-1 bg-slate-900/90 p-1 border border-slate-800 rounded-xl">
                   <span className="text-[10px] text-slate-500 font-bold uppercase px-2">Origin:</span>
                   {origins.map(orig => (
                     <button
                       key={orig}
                       onClick={() => setSelectedOrigin(orig)}
-                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
-                        selectedOrigin === orig ? 'bg-cyan-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                        selectedOrigin === orig ? 'bg-cyan-500 text-slate-950' : 'text-slate-400 hover:text-white'
                       }`}
                     >
                       {orig}
@@ -825,43 +851,46 @@ export default function App() {
                   ))}
                 </div>
 
-                <div className="relative min-w-[240px]">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <div className="relative min-w-[260px]">
+                  <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input 
                     type="text"
-                    placeholder="Search make, model, or location..."
+                    placeholder="Search make, model, location..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-900/80 border border-cyan-950 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
+                    className="w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 transition"
                   />
                 </div>
               </div>
 
             </div>
 
-            {/* Vehicle Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+            {/* Luxury Vehicle Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredVehicles.map(v => (
                 <div 
                   key={v.id} 
-                  className="group bg-slate-900/50 backdrop-blur-xl border border-cyan-950 hover:border-cyan-500/50 rounded-3xl overflow-hidden hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition duration-300 flex flex-col justify-between"
+                  className="group bg-slate-950/80 border border-cyan-950/80 hover:border-cyan-500/50 rounded-3xl overflow-hidden hover:shadow-[0_0_35px_rgba(6,182,212,0.15)] transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
+                    {/* Vehicle Image Container */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer" onClick={() => setDetailVehicle(v)}>
                       <img 
                         src={v.imageUrl} 
                         alt={v.model} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                       
-                      <div className="absolute top-3 left-3 flex gap-2">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 backdrop-blur-md">
+                      {/* Origin Tag */}
+                      <div className="absolute top-3.5 left-3.5 flex gap-2">
+                        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-950/80 text-cyan-400 border border-cyan-500/30 backdrop-blur-md">
                           {v.origin}
                         </span>
                       </div>
 
-                      <span className={`absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md border ${
+                      {/* Status Tag */}
+                      <span className={`absolute top-3.5 right-3.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider backdrop-blur-md border ${
                         v.status === 'available' 
                           ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' 
                           : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
@@ -869,31 +898,32 @@ export default function App() {
                         {v.status}
                       </span>
 
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+                      {/* Floating Title Bar */}
+                      <div className="absolute bottom-3.5 left-4 right-4 flex items-center justify-between text-white">
                         <div>
-                          <h3 className="font-extrabold text-lg tracking-tight">{v.make} {v.model}</h3>
-                          <p className="text-[11px] text-slate-300">{v.year} • {v.category}</p>
+                          <h3 className="font-extrabold text-lg tracking-tight text-white group-hover:text-cyan-400 transition">{v.make} {v.model}</h3>
+                          <p className="text-[11px] text-slate-300 font-medium">{v.year} • {v.category}</p>
                         </div>
-                        <div className="flex items-center gap-1 text-amber-400 text-xs font-bold bg-slate-900/80 px-2 py-1 rounded-lg border border-slate-800">
+                        <div className="flex items-center gap-1 text-amber-400 text-xs font-bold bg-slate-950/80 px-2.5 py-1 rounded-lg border border-slate-800">
                           <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                           <span>{v.rating.toFixed(1)}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Specs Row */}
-                    <div className="grid grid-cols-3 border-y border-cyan-950/60 bg-slate-950/40 text-center py-2.5 px-2 text-[11px] text-slate-400">
+                    {/* Specs Performance Grid */}
+                    <div className="grid grid-cols-3 border-y border-cyan-950/60 bg-slate-900/30 text-center py-3 px-2 text-[11px] text-slate-300 font-medium">
                       <div className="flex flex-col items-center gap-1 border-r border-cyan-950/60">
                         <Zap className="w-3.5 h-3.5 text-cyan-400" />
-                        <span>{v.horsepower} HP</span>
+                        <span className="font-mono font-bold text-white">{v.horsepower} HP</span>
                       </div>
                       <div className="flex flex-col items-center gap-1 border-r border-cyan-950/60">
                         <Gauge className="w-3.5 h-3.5 text-cyan-400" />
-                        <span>{v.zeroToHundred}</span>
+                        <span className="font-mono font-bold text-white">{v.zeroToHundred}</span>
                       </div>
                       <div className="flex flex-col items-center gap-1">
                         <Fuel className="w-3.5 h-3.5 text-cyan-400" />
-                        <span className="truncate max-w-[80px]">{v.rangeOrConsumption}</span>
+                        <span className="font-mono font-bold text-white truncate max-w-[85px]">{v.rangeOrConsumption}</span>
                       </div>
                     </div>
 
@@ -903,34 +933,35 @@ export default function App() {
                         <MapPin className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
                         <span className="truncate">{v.locationName}</span>
                       </span>
-                      <span className="text-[10px] text-slate-500 uppercase font-semibold">{v.fuelType}</span>
+                      <span className="text-[10px] text-slate-500 uppercase font-mono font-bold">{v.fuelType}</span>
                     </div>
                   </div>
 
-                  {/* Actions Bar */}
-                  <div className="p-5 flex items-center justify-between gap-3 bg-slate-900/30">
+                  {/* Actions & Pricing Bar */}
+                  <div className="p-5 flex items-center justify-between gap-3 bg-slate-950/60">
                     <div>
-                      <span className="text-xs text-slate-400 block">Daily Rate</span>
-                      <span className="text-lg font-black text-white">R{v.dailyRate.toLocaleString()} <span className="text-[10px] font-normal text-slate-400">/day</span></span>
+                      <span className="text-[10px] text-slate-500 uppercase font-bold block">Daily Reservation</span>
+                      <span className="text-lg font-black text-white font-mono">R{v.dailyRate.toLocaleString()} <span className="text-[10px] font-normal text-slate-400">/day</span></span>
                     </div>
 
                     <div className="flex items-center gap-2">
                       <button 
                         onClick={() => setDetailVehicle(v)}
-                        className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl transition"
+                        className="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl transition border border-slate-800"
+                        title="View Full Specifications"
                       >
-                        Specs
+                        <Eye className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={() => setBookingVehicle(v)}
                         disabled={v.status !== 'available'}
-                        className={`px-4 py-2 rounded-xl text-xs font-black transition ${
+                        className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-300 ${
                           v.status === 'available'
-                            ? 'bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 shadow-md shadow-cyan-500/20'
-                            : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                            ? 'bg-gradient-to-r from-cyan-500 to-teal-400 hover:from-cyan-400 hover:to-teal-300 text-slate-950 shadow-md shadow-cyan-500/20'
+                            : 'bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed'
                         }`}
                       >
-                        Book
+                        Reserve
                       </button>
                     </div>
                   </div>
@@ -941,75 +972,84 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 2: LIVE TELEMETRY MAP */}
+        {/* VIEW 2: GPS RADAR MAP */}
         {activeTab === 'map' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Map Visual Container */}
-            <div className="lg:col-span-2 bg-slate-900/50 border border-cyan-950 rounded-3xl p-6 relative min-h-[500px] flex flex-col justify-between overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
+            <div className="lg:col-span-2 bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-6 relative min-h-[520px] flex flex-col justify-between overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:20px_20px] opacity-10 pointer-events-none" />
               
               <div className="relative z-10 flex justify-between items-start">
                 <div>
                   <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <Navigation className="w-5 h-5 text-cyan-400 animate-pulse" /> Live Fleet Radar
+                    <Navigation className="w-5 h-5 text-cyan-400 animate-pulse" /> Live Telemetry Radar
                   </h2>
-                  <p className="text-xs text-slate-400">Real-time GPS telemetry across Greater Cape Town</p>
+                  <p className="text-xs text-slate-400">Cape Town active telemetry stream with real-time GPS updating every 2.5 seconds</p>
                 </div>
-                <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-full text-xs font-mono font-bold">
-                  2.5s Latency • Live
+                <span className="px-3.5 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full text-xs font-mono font-bold">
+                  ● LIVE RADAR
                 </span>
               </div>
 
-              {/* Simulated Map Graphical Representation */}
-              <div className="relative z-10 my-8 p-8 border border-cyan-950 bg-slate-950/60 rounded-2xl min-h-[300px] flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-full border-2 border-dashed border-cyan-500/40 mx-auto flex items-center justify-center animate-spin-slow mb-4">
-                    <Compass className="w-10 h-10 text-cyan-400" />
+              {/* Graphical Simulated Radar Canvas */}
+              <div className="relative z-10 my-8 p-8 border border-cyan-950/80 bg-slate-900/60 backdrop-blur-md rounded-2xl min-h-[320px] flex flex-col items-center justify-center text-center">
+                <div className="relative mb-6">
+                  <div className="w-24 h-24 rounded-full border-2 border-cyan-500/30 flex items-center justify-center animate-pulse">
+                    <div className="w-16 h-16 rounded-full border border-cyan-400/50 flex items-center justify-center bg-cyan-500/10">
+                      <Compass className="w-8 h-8 text-cyan-400" />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-bold text-white">{focusedVehicle.make} {focusedVehicle.model}</h3>
-                  <p className="text-xs text-cyan-400 mt-1">{focusedVehicle.locationName}</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">GPS: {focusedVehicle.lat.toFixed(4)}° S, {focusedVehicle.lng.toFixed(4)}° E</p>
+                </div>
+
+                <h3 className="text-xl font-extrabold text-white">{focusedVehicle.make} {focusedVehicle.model}</h3>
+                <p className="text-xs text-cyan-400 font-bold mt-1">{focusedVehicle.locationName}</p>
+                <div className="flex items-center gap-4 mt-3 text-xs font-mono text-slate-400">
+                  <span>Lat: {focusedVehicle.lat.toFixed(4)}° S</span>
+                  <span>•</span>
+                  <span>Lng: {focusedVehicle.lng.toFixed(4)}° E</span>
                 </div>
               </div>
 
               {/* Live Telemetry Bar */}
-              <div className="relative z-10 grid grid-cols-3 gap-4 bg-slate-950/80 p-4 rounded-xl border border-cyan-950/80 text-center">
+              <div className="relative z-10 grid grid-cols-3 gap-4 bg-slate-900/80 p-4 rounded-xl border border-cyan-950 text-center">
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Speed</span>
-                  <span className="text-lg font-mono font-bold text-cyan-400">{focusedVehicle.speed} km/h</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold block">Current Speed</span>
+                  <span className="text-xl font-mono font-black text-cyan-400">{focusedVehicle.speed} km/h</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Fuel/Battery</span>
-                  <span className="text-lg font-mono font-bold text-emerald-400">{focusedVehicle.fuelPercent}%</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold block">Energy / Fuel</span>
+                  <span className="text-xl font-mono font-black text-emerald-400">{focusedVehicle.fuelPercent}%</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Status</span>
-                  <span className="text-lg font-mono font-bold text-amber-400 capitalize">{focusedVehicle.status}</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold block">Transmission State</span>
+                  <span className="text-xl font-mono font-black text-amber-400 capitalize">{focusedVehicle.status}</span>
                 </div>
               </div>
             </div>
 
             {/* Vehicle Selection List for Map */}
-            <div className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-6 flex flex-col gap-4">
-              <h3 className="text-lg font-bold text-white">Tracked Vehicles</h3>
+            <div className="bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-6 flex flex-col gap-4 shadow-2xl">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Car className="w-4 h-4 text-cyan-400" /> Active Vehicles ({vehicles.length})
+              </h3>
               <div className="flex flex-col gap-3 overflow-y-auto max-h-[480px] pr-2">
                 {vehicles.map(v => (
                   <div 
                     key={v.id}
                     onClick={() => setFocusedVehicle(v)}
-                    className={`p-4 rounded-2xl border transition cursor-pointer flex items-center gap-4 ${
+                    className={`p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-3.5 ${
                       focusedVehicle.id === v.id
-                        ? 'bg-cyan-500/10 border-cyan-500/50 text-white'
-                        : 'bg-slate-950/40 border-cyan-950/80 text-slate-300 hover:border-slate-700'
+                        ? 'bg-cyan-500/10 border-cyan-500/60 text-white shadow-lg shadow-cyan-500/10'
+                        : 'bg-slate-900/50 border-slate-800 text-slate-300 hover:border-slate-700'
                     }`}
                   >
-                    <img src={v.imageUrl} alt={v.model} className="w-14 h-14 rounded-xl object-cover" />
+                    <img src={v.imageUrl} alt={v.model} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-bold text-sm truncate text-white">{v.make} {v.model}</h4>
-                      <p className="text-xs text-slate-400 truncate">{v.locationName}</p>
+                      <h4 className="font-bold text-xs truncate text-white">{v.make} {v.model}</h4>
+                      <p className="text-[11px] text-slate-400 truncate">{v.locationName}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                        <span className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded ${
                           v.status === 'rented' ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'
                         }`}>
                           {v.status === 'rented' ? `${v.speed} km/h` : 'Stationary'}
@@ -1024,29 +1064,29 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 3: CAPE TOWN BRANCHES */}
+        {/* VIEW 3: CAPE TOWN DEPOTS */}
         {activeTab === 'branches' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {capeTownBranches.map(branch => (
-              <div key={branch.id} className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-6 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div key={branch.id} className="bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-6 flex flex-col justify-between hover:border-cyan-500/50 transition duration-300 shadow-xl">
                 <div>
-                  <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-2xl w-fit mb-4">
+                  <div className="p-3 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-2xl w-fit mb-4">
                     <Building2 className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{branch.name}</h3>
-                  <p className="text-xs text-cyan-400 font-semibold mt-1">{branch.area}</p>
+                  <h3 className="text-xl font-extrabold text-white">{branch.name}</h3>
+                  <p className="text-xs text-cyan-400 font-bold mt-1">{branch.area}</p>
                   
-                  <div className="mt-6 flex flex-col gap-3 text-xs text-slate-300">
-                    <div className="flex items-start gap-2">
-                      <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" />
+                  <div className="mt-6 flex flex-col gap-3 text-xs text-slate-300 font-medium">
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
                       <span>{branch.address}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                    <div className="flex items-center gap-2.5">
+                      <Phone className="w-4 h-4 text-cyan-400 flex-shrink-0" />
                       <span>{branch.phone}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                    <div className="flex items-center gap-2.5">
+                      <Clock className="w-4 h-4 text-cyan-400 flex-shrink-0" />
                       <span>{branch.hours}</span>
                     </div>
                   </div>
@@ -1057,44 +1097,43 @@ export default function App() {
                     setSelectedBranch(branch.id);
                     setActiveTab('fleet');
                   }}
-                  className="mt-6 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2"
+                  className="mt-6 w-full py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-2"
                 >
-                  View Vehicles Here <ChevronRight className="w-4 h-4" />
+                  Browse Branch Vehicles <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             ))}
           </div>
         )}
 
-        {/* VIEW 4: TECH SPECS & ABOUT */}
-        {activeTab === 'about' && (
-          <div className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-8 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-cyan-400" /> Platform Architecture & Specs
+        {/* VIEW 4: PERFORMANCE SPECS */}
+        {activeTab === 'specs' && (
+          <div className="bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl">
+            <h2 className="text-2xl font-bold text-white mb-3 flex items-center gap-2">
+              <Gauge className="w-6 h-6 text-cyan-400" /> Engineering & Performance Specs
             </h2>
-            <p className="text-sm text-slate-300 leading-relaxed mb-6">
-              DriveFleet Cape Town operates a real-time high-performance fleet management and luxury booking system tailored for South Africa&apos;s premier coastal destination.
+            <p className="text-xs md:text-sm text-slate-300 leading-relaxed mb-6">
+              DriveFleet Cape Town offers dynamic telemetry integration across Japanese, German, and USA performance engineering standards.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 bg-slate-950/60 border border-cyan-950 rounded-2xl">
-                <h4 className="font-bold text-cyan-400 text-sm mb-1">Real-time Telemetry</h4>
-                <p className="text-xs text-slate-400">Continuous 2.5s polling interval simulating GPS, speed, and energy capacity for active vehicles.</p>
+              <div className="p-5 bg-slate-900/60 border border-cyan-950 rounded-2xl">
+                <h4 className="font-bold text-cyan-400 text-xs uppercase font-mono mb-1">Telemetry Interactivity</h4>
+                <p className="text-xs text-slate-400">Live GPS tracking with simulated speed calculations polled directly from active Cape Town routes.</p>
               </div>
-              <div className="p-4 bg-slate-950/60 border border-cyan-950 rounded-2xl">
-                <h4 className="font-bold text-cyan-400 text-sm mb-1">Dual Transaction System</h4>
-                <p className="text-xs text-slate-400">Integrated cart supporting daily luxury rentals or outright vehicle acquisition with ZAR pricing and local VAT calculations.</p>
+              <div className="p-5 bg-slate-900/60 border border-cyan-950 rounded-2xl">
+                <h4 className="font-bold text-cyan-400 text-xs uppercase font-mono mb-1">Dual Transaction Model</h4>
+                <p className="text-xs text-slate-400">Seamlessly toggle between short-term executive rentals or direct purchase acquisitions in ZAR.</p>
               </div>
             </div>
           </div>
         )}
 
-        {/* VIEW 5: REVIEWS */}
+        {/* VIEW 5: CONCIERGE REVIEWS */}
         {activeTab === 'reviews' && (
           <div className="max-w-4xl mx-auto flex flex-col gap-8">
-            {/* Add Review Box */}
-            <form onSubmit={handleAddReview} className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-6">
-              <h3 className="text-lg font-bold text-white mb-4">Leave a Review</h3>
+            <form onSubmit={handleAddReview} className="bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold text-white mb-2">Leave a Client Review</h3>
               <div className="flex gap-2 mb-4">
                 {[1, 2, 3, 4, 5].map(star => (
                   <button 
@@ -1103,29 +1142,28 @@ export default function App() {
                     onClick={() => setNewRating(star)}
                     className="p-1"
                   >
-                    <Star className={`w-5 h-5 ${star <= newRating ? 'fill-amber-400 text-amber-400' : 'text-slate-600'}`} />
+                    <Star className={`w-5 h-5 ${star <= newRating ? 'fill-amber-400 text-amber-400' : 'text-slate-700'}`} />
                   </button>
                 ))}
               </div>
               <textarea 
                 value={newComment}
                 onChange={e => setNewComment(e.target.value)}
-                placeholder="Share your DriveFleet Cape Town experience..."
-                className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 mb-4 h-24"
+                placeholder="Share your experience with DriveFleet Cape Town..."
+                className="w-full bg-slate-900 border border-slate-800 rounded-xl p-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 mb-4 h-28"
               />
-              <button type="submit" className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs transition">
-                Submit Review
+              <button type="submit" className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-extrabold rounded-xl text-xs transition shadow-md">
+                Post Review
               </button>
             </form>
 
-            {/* Review List */}
             <div className="flex flex-col gap-4">
               {reviews.map(rev => (
-                <div key={rev.id} className="bg-slate-900/40 border border-cyan-950 rounded-2xl p-6">
+                <div key={rev.id} className="bg-slate-950/80 border border-cyan-950/80 rounded-2xl p-6 shadow-md">
                   <div className="flex items-center justify-between mb-3">
                     <div>
                       <h4 className="font-bold text-white text-sm">{rev.author}</h4>
-                      <span className="text-[10px] text-cyan-400 font-medium">{rev.role}</span>
+                      <span className="text-[10px] text-cyan-400 font-semibold">{rev.role}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       {[...Array(rev.rating)].map((_, i) => (
@@ -1134,7 +1172,7 @@ export default function App() {
                     </div>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">{rev.comment}</p>
-                  <span className="text-[10px] text-slate-500 mt-3 block">{rev.date}</span>
+                  <span className="text-[10px] text-slate-500 mt-3 block font-mono">{rev.date}</span>
                 </div>
               ))}
             </div>
@@ -1145,37 +1183,37 @@ export default function App() {
         {activeTab === 'cart' && (
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <ShoppingCart className="w-6 h-6 text-cyan-400" /> Your Booking Cart
+              <ShoppingCart className="w-6 h-6 text-cyan-400" /> Reservation Cart
             </h2>
 
             {cart.length === 0 ? (
-              <div className="bg-slate-900/40 border border-cyan-950 rounded-3xl p-12 text-center">
+              <div className="bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-12 text-center shadow-2xl">
                 <ShoppingCart className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                <h3 className="text-lg font-bold text-white mb-2">Your cart is empty</h3>
-                <p className="text-xs text-slate-400 mb-6">Explore our global fleet catalog to select a vehicle.</p>
+                <h3 className="text-lg font-bold text-white mb-1">Your cart is currently empty</h3>
+                <p className="text-xs text-slate-400 mb-6">Select a vehicle from our global fleet catalog to proceed.</p>
                 <button 
                   onClick={() => setActiveTab('fleet')}
-                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-extrabold rounded-xl text-xs shadow-lg"
                 >
-                  Browse Catalog
+                  Browse Global Catalog
                 </button>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 flex flex-col gap-4">
                   {cart.map(item => (
-                    <div key={item.vehicle.id} className="bg-slate-900/50 border border-cyan-950 rounded-2xl p-4 flex items-center justify-between gap-4">
-                      <img src={item.vehicle.imageUrl} alt={item.vehicle.model} className="w-20 h-16 rounded-xl object-cover" />
+                    <div key={item.vehicle.id} className="bg-slate-950/80 border border-cyan-950/80 rounded-2xl p-4 flex items-center justify-between gap-4 shadow-xl">
+                      <img src={item.vehicle.imageUrl} alt={item.vehicle.model} className="w-24 h-18 rounded-xl object-cover" />
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-white text-sm truncate">{item.vehicle.make} {item.vehicle.model}</h4>
-                        <p className="text-xs text-cyan-400 capitalize">{item.type} {item.type === 'rental' ? `(${item.rentalDays} days)` : ''}</p>
-                        <span className="text-xs font-mono text-slate-300 mt-1 block">
+                        <h4 className="font-extrabold text-white text-sm truncate">{item.vehicle.make} {item.vehicle.model}</h4>
+                        <p className="text-xs text-cyan-400 uppercase font-mono font-bold mt-0.5">{item.type} {item.type === 'rental' ? `(${item.rentalDays} Days)` : ''}</p>
+                        <span className="text-sm font-mono text-white font-black mt-1 block">
                           R{(item.type === 'purchase' ? item.vehicle.purchasePrice : item.vehicle.dailyRate * (item.rentalDays || 1)).toLocaleString()}
                         </span>
                       </div>
                       <button 
                         onClick={() => handleRemoveFromCart(item.vehicle.id)}
-                        className="p-2 text-slate-500 hover:text-red-400 transition"
+                        className="p-2.5 text-slate-500 hover:text-red-400 transition"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
@@ -1184,23 +1222,23 @@ export default function App() {
                 </div>
 
                 {/* Summary Box */}
-                <div className="bg-slate-900/50 border border-cyan-950 rounded-2xl p-6 h-fit flex flex-col gap-4">
-                  <h3 className="font-bold text-white text-base border-b border-cyan-950 pb-3">Order Summary</h3>
+                <div className="bg-slate-950/80 border border-cyan-950/80 rounded-2xl p-6 h-fit flex flex-col gap-4 shadow-2xl">
+                  <h3 className="font-extrabold text-white text-base border-b border-cyan-950 pb-3">Reservation Summary</h3>
                   <div className="flex justify-between text-xs text-slate-400">
                     <span>Subtotal</span>
-                    <span className="text-white font-mono">R{subtotal.toLocaleString()}</span>
+                    <span className="text-white font-mono font-bold">R{subtotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-xs text-slate-400">
-                    <span>Est. VAT (15%)</span>
-                    <span className="text-white font-mono">R{estimatedVAT.toLocaleString()}</span>
+                    <span>SA VAT (15%)</span>
+                    <span className="text-white font-mono font-bold">R{estimatedVAT.toLocaleString()}</span>
                   </div>
-                  <div className="border-t border-cyan-950 pt-3 flex justify-between font-bold text-white text-sm">
+                  <div className="border-t border-cyan-950 pt-3 flex justify-between font-extrabold text-white text-base">
                     <span>Grand Total</span>
                     <span className="text-cyan-400 font-mono">R{grandTotal.toLocaleString()}</span>
                   </div>
                   <button 
                     onClick={() => setActiveTab('checkout')}
-                    className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs mt-2"
+                    className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs mt-2 shadow-lg shadow-cyan-500/20"
                   >
                     Proceed to Checkout
                   </button>
@@ -1212,41 +1250,41 @@ export default function App() {
 
         {/* VIEW 7: CHECKOUT */}
         {activeTab === 'checkout' && (
-          <div className="max-w-2xl mx-auto bg-slate-900/50 border border-cyan-950 rounded-3xl p-8">
+          <div className="max-w-2xl mx-auto bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-8 shadow-2xl">
             {orderComplete ? (
               <div className="text-center py-8">
-                <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-4 animate-bounce" />
-                <h2 className="text-2xl font-bold text-white mb-2">Order Confirmed!</h2>
-                <p className="text-xs text-slate-400 mb-2">Order Reference ID:</p>
-                <span className="px-4 py-2 bg-slate-950 border border-cyan-950 font-mono text-cyan-400 text-sm font-bold rounded-xl inline-block mb-6">
+                <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
+                <h2 className="text-2xl font-black text-white mb-2">Reservation Confirmed</h2>
+                <p className="text-xs text-slate-400 mb-2">Reference Token:</p>
+                <span className="px-4 py-2 bg-slate-900 border border-cyan-950 font-mono text-cyan-400 text-sm font-black rounded-xl inline-block mb-6">
                   {placedOrderId}
                 </span>
-                <p className="text-xs text-slate-300 max-w-md mx-auto mb-8">
-                  Your reservation request has been processed. A DriveFleet Cape Town representative will contact you shortly regarding delivery or pickup details.
+                <p className="text-xs text-slate-300 max-w-md mx-auto mb-8 leading-relaxed">
+                  Your executive booking has been dispatched to our Cape Town concierge team. You will receive real-time SMS tracking updates.
                 </p>
                 <button 
                   onClick={() => {
                     setOrderComplete(false);
                     setActiveTab('fleet');
                   }}
-                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
                 >
                   Return to Fleet
                 </button>
               </div>
             ) : (
               <form onSubmit={handleFinalCheckout} className="flex flex-col gap-6">
-                <h2 className="text-2xl font-bold text-white border-b border-cyan-950 pb-4">Checkout & Reserve</h2>
+                <h2 className="text-2xl font-black text-white border-b border-cyan-950 pb-4">Executive Checkout</h2>
                 
                 {/* Delivery Option */}
                 <div>
-                  <label className="text-xs font-bold text-slate-400 uppercase block mb-3">Fulfillment Method</label>
+                  <label className="text-xs font-bold text-slate-400 uppercase block mb-3">Fulfillment Preference</label>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
                       onClick={() => setDeliveryMethod('delivery')}
-                      className={`p-3 rounded-xl border text-xs font-bold transition ${
-                        deliveryMethod === 'delivery' ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'bg-slate-950 border-cyan-950 text-slate-400'
+                      className={`p-3.5 rounded-xl border text-xs font-bold transition ${
+                        deliveryMethod === 'delivery' ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'bg-slate-900 border-slate-800 text-slate-400'
                       }`}
                     >
                       Doorstep Delivery
@@ -1254,34 +1292,34 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setDeliveryMethod('pickup')}
-                      className={`p-3 rounded-xl border text-xs font-bold transition ${
-                        deliveryMethod === 'pickup' ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'bg-slate-950 border-cyan-950 text-slate-400'
+                      className={`p-3.5 rounded-xl border text-xs font-bold transition ${
+                        deliveryMethod === 'pickup' ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'bg-slate-900 border-slate-800 text-slate-400'
                       }`}
                     >
-                      Branch Pickup
+                      Depot Pickup
                     </button>
                   </div>
                 </div>
 
                 {deliveryMethod === 'delivery' ? (
                   <div>
-                    <label className="text-xs text-slate-400 block mb-2">Delivery Address (Cape Town Area)</label>
+                    <label className="text-xs text-slate-400 block mb-2 font-medium">Cape Town Delivery Address</label>
                     <input 
                       type="text" 
                       required
-                      placeholder="e.g., 12 Camps Bay Drive, Camps Bay, Cape Town"
+                      placeholder="e.g., Victoria Road, Camps Bay, Cape Town"
                       value={deliveryAddress}
                       onChange={e => setDeliveryAddress(e.target.value)}
-                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                     />
                   </div>
                 ) : (
                   <div>
-                    <label className="text-xs text-slate-400 block mb-2">Select Pickup Branch</label>
+                    <label className="text-xs text-slate-400 block mb-2 font-medium">Select Pickup Depot</label>
                     <select 
                       value={selectedBranch}
                       onChange={e => setSelectedBranch(e.target.value)}
-                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
                     >
                       {capeTownBranches.map(b => (
                         <option key={b.id} value={b.id}>{b.name} ({b.area})</option>
@@ -1290,20 +1328,19 @@ export default function App() {
                   </div>
                 )}
 
-                {/* Payment Fields */}
+                {/* Payment Information */}
                 <div className="border-t border-cyan-950 pt-4 flex flex-col gap-4">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Lock className="w-4 h-4 text-cyan-400" /> Secure Payment Information
+                    <Lock className="w-4 h-4 text-cyan-400" /> Secure Payment Encryption
                   </h3>
                   <div>
                     <label className="text-xs text-slate-400 block mb-1">Cardholder Name</label>
                     <input 
                       type="text" 
                       required
-                      placeholder="John Doe"
                       value={cardName}
                       onChange={e => setCardName(e.target.value)}
-                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
                     />
                   </div>
                   <div>
@@ -1311,10 +1348,9 @@ export default function App() {
                     <input 
                       type="text" 
                       required
-                      placeholder="4000 0000 0000 0000"
                       value={cardNumber}
                       onChange={e => setCardNumber(e.target.value)}
-                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -1323,10 +1359,9 @@ export default function App() {
                       <input 
                         type="text" 
                         required
-                        placeholder="MM/YY"
                         value={cardExpiry}
                         onChange={e => setCardExpiry(e.target.value)}
-                        className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                        className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
                       />
                     </div>
                     <div>
@@ -1334,10 +1369,9 @@ export default function App() {
                       <input 
                         type="text" 
                         required
-                        placeholder="123"
                         value={cardCvc}
                         onChange={e => setCardCvc(e.target.value)}
-                        className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                        className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
                       />
                     </div>
                   </div>
@@ -1345,9 +1379,9 @@ export default function App() {
 
                 <button 
                   type="submit" 
-                  className="w-full py-3.5 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-400 text-slate-950 font-extrabold rounded-xl text-xs mt-4 shadow-lg shadow-cyan-500/20"
+                  className="w-full py-4 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 font-black rounded-xl text-xs mt-2 shadow-xl shadow-cyan-500/20 uppercase tracking-wider"
                 >
-                  Complete Reservation (R{grandTotal.toLocaleString()})
+                  Confirm Reservation (R{grandTotal.toLocaleString()})
                 </button>
               </form>
             )}
@@ -1358,16 +1392,16 @@ export default function App() {
 
       {/* MODAL 1: AUTH MODAL */}
       {isAuthModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
             <button 
               onClick={() => setIsAuthModalOpen(false)}
               className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
-            <h3 className="text-xl font-bold text-white mb-2">DriveFleet VIP Access</h3>
-            <p className="text-xs text-slate-400 mb-6">Sign in or register for express luxury rentals in Cape Town.</p>
+            <h3 className="text-xl font-extrabold text-white mb-1">VIP Member Portal</h3>
+            <p className="text-xs text-slate-400 mb-6">Sign in for priority Cape Town fleet allocation.</p>
 
             <form onSubmit={handleAuthSubmit} className="flex flex-col gap-4">
               <div>
@@ -1377,7 +1411,7 @@ export default function App() {
                   placeholder="e.g. Sarah Jenkins"
                   value={authName}
                   onChange={e => setAuthName(e.target.value)}
-                  className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                 />
               </div>
               <div>
@@ -1388,7 +1422,7 @@ export default function App() {
                   placeholder="sarah@example.com"
                   value={authEmail}
                   onChange={e => setAuthEmail(e.target.value)}
-                  className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                 />
               </div>
               <div>
@@ -1399,14 +1433,14 @@ export default function App() {
                   placeholder="••••••••"
                   value={authPassword}
                   onChange={e => setAuthPassword(e.target.value)}
-                  className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                 />
               </div>
               <button 
                 type="submit" 
-                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs mt-2"
+                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs mt-2"
               >
-                Continue
+                Sign In
               </button>
             </form>
           </div>
@@ -1415,19 +1449,19 @@ export default function App() {
 
       {/* MODAL 2: BOOKING MODAL */}
       {bookingVehicle && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
             <button 
               onClick={() => setBookingVehicle(null)}
               className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
-            <h3 className="text-lg font-bold text-white mb-1">Configure Rental</h3>
-            <p className="text-xs text-cyan-400 mb-4">{bookingVehicle.make} {bookingVehicle.model}</p>
+            <h3 className="text-lg font-bold text-white mb-1">Configure Booking</h3>
+            <p className="text-xs text-cyan-400 font-bold mb-4">{bookingVehicle.make} {bookingVehicle.model}</p>
 
-            <div className="flex items-center gap-4 bg-slate-950 p-3 rounded-2xl border border-cyan-950/60 mb-6">
-              <img src={bookingVehicle.imageUrl} alt={bookingVehicle.model} className="w-16 h-12 rounded-xl object-cover" />
+            <div className="flex items-center gap-4 bg-slate-900 p-3 rounded-2xl border border-slate-800 mb-6">
+              <img src={bookingVehicle.imageUrl} alt={bookingVehicle.model} className="w-18 h-14 rounded-xl object-cover" />
               <div>
                 <span className="text-xs font-bold text-white block">Daily Rate</span>
                 <span className="text-sm font-mono text-cyan-400 font-bold">R{bookingVehicle.dailyRate.toLocaleString()} / day</span>
@@ -1435,8 +1469,8 @@ export default function App() {
             </div>
 
             <div className="mb-6">
-              <label className="text-xs text-slate-400 block mb-2">Duration (Days)</label>
-              <div className="flex items-center justify-between bg-slate-950 border border-cyan-950 rounded-xl p-2">
+              <label className="text-xs text-slate-400 block mb-2 font-medium">Rental Period (Days)</label>
+              <div className="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-xl p-2">
                 <button 
                   onClick={() => setRentalDays(Math.max(1, rentalDays - 1))}
                   className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
@@ -1454,24 +1488,24 @@ export default function App() {
             </div>
 
             <div className="border-t border-cyan-950 pt-4 mb-6 flex justify-between items-center text-xs">
-              <span className="text-slate-400">Total Price</span>
+              <span className="text-slate-400">Total Calculation</span>
               <span className="text-lg font-mono font-bold text-white">R{(bookingVehicle.dailyRate * rentalDays).toLocaleString()}</span>
             </div>
 
             <button 
               onClick={handleBookVehicle}
-              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+              className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
             >
-              Add Rental to Cart
+              Add to Cart
             </button>
           </div>
         </div>
       )}
 
-      {/* MODAL 3: DETAIL / SPECS MODAL */}
+      {/* MODAL 3: SPECS DETAIL MODAL */}
       {detailVehicle && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto shadow-2xl">
             <button 
               onClick={() => setDetailVehicle(null)}
               className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
@@ -1481,38 +1515,38 @@ export default function App() {
             <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4">
               <img src={detailVehicle.imageUrl} alt={detailVehicle.model} className="w-full h-full object-cover" />
             </div>
-            <h3 className="text-xl font-bold text-white">{detailVehicle.make} {detailVehicle.model}</h3>
-            <p className="text-xs text-cyan-400 mb-6">{detailVehicle.year} • {detailVehicle.origin} Origin • {detailVehicle.category}</p>
+            <h3 className="text-xl font-extrabold text-white">{detailVehicle.make} {detailVehicle.model}</h3>
+            <p className="text-xs text-cyan-400 font-bold mb-6">{detailVehicle.year} • {detailVehicle.origin} Origin • {detailVehicle.category}</p>
 
             <div className="grid grid-cols-2 gap-3 mb-6 text-xs">
-              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
-                <span className="text-slate-500 block text-[10px]">Horsepower</span>
-                <span className="font-bold text-white">{detailVehicle.horsepower} HP</span>
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Output</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.horsepower} HP</span>
               </div>
-              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
-                <span className="text-slate-500 block text-[10px]">0-100 km/h</span>
-                <span className="font-bold text-white">{detailVehicle.zeroToHundred}</span>
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Acceleration (0-100)</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.zeroToHundred}</span>
               </div>
-              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
                 <span className="text-slate-500 block text-[10px]">Top Speed</span>
-                <span className="font-bold text-white">{detailVehicle.topSpeed}</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.topSpeed}</span>
               </div>
-              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
                 <span className="text-slate-500 block text-[10px]">Efficiency / Range</span>
-                <span className="font-bold text-white">{detailVehicle.rangeOrConsumption}</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.rangeOrConsumption}</span>
               </div>
             </div>
 
             <div className="flex gap-3">
               <button 
                 onClick={() => handleAddToCart(detailVehicle, 'rental', 3)}
-                className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs"
+                className="flex-1 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-bold rounded-xl text-xs"
               >
-                Rent (R{detailVehicle.dailyRate}/day)
+                Reserve (R{detailVehicle.dailyRate}/day)
               </button>
               <button 
                 onClick={() => handleAddToCart(detailVehicle, 'purchase')}
-                className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+                className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
               >
                 Buy (R{(detailVehicle.purchasePrice / 1000000).toFixed(2)}M)
               </button>
@@ -1523,15 +1557,15 @@ export default function App() {
 
       {/* MODAL 4: ADD VEHICLE MODAL */}
       {isAddVehicleOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto shadow-2xl">
             <button 
               onClick={() => setIsAddVehicleOpen(false)}
               className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
-            <h3 className="text-lg font-bold text-white mb-4">Add Vehicle to Fleet</h3>
+            <h3 className="text-lg font-bold text-white mb-4">Add Fleet Vehicle</h3>
 
             <form onSubmit={handleAddVehicle} className="flex flex-col gap-3 text-xs">
               <input 
@@ -1540,7 +1574,7 @@ export default function App() {
                 required
                 value={newVehicle.make}
                 onChange={e => setNewVehicle({ ...newVehicle, make: e.target.value })}
-                className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
               />
               <input 
                 type="text" 
@@ -1548,7 +1582,7 @@ export default function App() {
                 required
                 value={newVehicle.model}
                 onChange={e => setNewVehicle({ ...newVehicle, model: e.target.value })}
-                className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
               />
               <div className="grid grid-cols-2 gap-2">
                 <input 
@@ -1557,7 +1591,7 @@ export default function App() {
                   required
                   value={newVehicle.dailyRate}
                   onChange={e => setNewVehicle({ ...newVehicle, dailyRate: Number(e.target.value) })}
-                  className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
                 />
                 <input 
                   type="number" 
@@ -1565,7 +1599,7 @@ export default function App() {
                   required
                   value={newVehicle.purchasePrice}
                   onChange={e => setNewVehicle({ ...newVehicle, purchasePrice: Number(e.target.value) })}
-                  className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
                 />
               </div>
               <input 
@@ -1573,11 +1607,11 @@ export default function App() {
                 placeholder="Image URL"
                 value={newVehicle.imageUrl}
                 onChange={e => setNewVehicle({ ...newVehicle, imageUrl: e.target.value })}
-                className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
               />
               <button 
                 type="submit" 
-                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl mt-2"
+                className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl mt-2"
               >
                 Add Vehicle
               </button>
