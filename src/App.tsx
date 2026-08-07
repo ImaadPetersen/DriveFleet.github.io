@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Car, Shield, Navigation, Fuel, Users, Calendar, Filter, Plus, X, 
-  MapPin, CheckCircle2, Zap, Activity, DollarSign, Search, 
-  BatteryCharging, Clock, ChevronRight, User, LogIn, LogOut, Star, 
+import {
+  Car, Shield, Navigation, Fuel, Users, Calendar, Filter, Plus, X,
+  MapPin, CheckCircle2, Zap, Activity, DollarSign, Search,
+  BatteryCharging, Clock, ChevronRight, User, LogIn, LogOut, Star,
   Award, HeartHandshake, HelpCircle, MessageSquare, Sparkles, Send,
   ShoppingCart, Trash2, CreditCard, ArrowLeft, Check, Lock, Gauge, UserPlus,
   Compass, Globe, Building2, Phone, ExternalLink, Info, CheckCircle, Sliders,
@@ -420,7 +420,7 @@ export default function App() {
   const [selectedOrigin, setSelectedOrigin] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'fleet' | 'map' | 'branches' | 'specs' | 'reviews' | 'cart' | 'checkout'>('fleet');
-  
+
   // Cart State
   const [cart, setCart] = useState<CartItem[]>([]);
 
@@ -566,7 +566,7 @@ export default function App() {
     e.preventDefault();
     const generatedId = 'CPT-EX-9' + Math.floor(10000 + Math.random() * 90000);
     setPlacedOrderId(generatedId);
-    
+
     const cartVehicleIds = cart.map(c => c.vehicle.id);
     setVehicles(prev => prev.map(v => cartVehicleIds.includes(v.id) ? { ...v, status: 'rented' } : v));
 
@@ -626,7 +626,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100 selection:bg-cyan-400 selection:text-black font-sans antialiased relative overflow-x-hidden">
-      
+
       {/* LUXURY BACKGROUND AMBIENT GLOWS */}
       <div className="fixed top-0 left-1/3 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[220px] pointer-events-none" />
       <div className="fixed bottom-0 right-1/4 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-[200px] pointer-events-none" />
@@ -651,7 +651,7 @@ export default function App() {
       {/* EXECUTIVE NAVIGATION BAR */}
       <header className="sticky top-0 z-40 bg-[#030712]/90 backdrop-blur-3xl border-b border-cyan-950/80 px-6 py-4 shadow-2xl">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
-          
+
           {/* Logo & Identity */}
           <div className="flex items-center gap-3.5 cursor-pointer" onClick={() => setActiveTab('fleet')}>
             <div className="relative p-3 bg-gradient-to-tr from-cyan-500 via-teal-400 to-emerald-400 rounded-2xl text-slate-950 shadow-xl shadow-cyan-500/25 ring-1 ring-white/20">
@@ -670,7 +670,7 @@ export default function App() {
 
           {/* Navigation Links */}
           <div className="hidden xl:flex items-center p-1.5 bg-slate-950/80 border border-cyan-950 rounded-2xl shadow-inner">
-            <button 
+            <button
               onClick={() => setActiveTab('fleet')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
                 activeTab === 'fleet' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
@@ -678,7 +678,7 @@ export default function App() {
             >
               <Car className="w-4 h-4" /> Global Catalog
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('map')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
                 activeTab === 'map' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
@@ -686,7 +686,7 @@ export default function App() {
             >
               <Navigation className="w-4 h-4" /> GPS Radar Map
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('branches')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
                 activeTab === 'branches' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
@@ -694,7 +694,7 @@ export default function App() {
             >
               <Building2 className="w-4 h-4" /> Cape Town Depots
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('specs')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
                 activeTab === 'specs' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
@@ -702,7 +702,7 @@ export default function App() {
             >
               <Gauge className="w-4 h-4" /> Performance Tech
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('reviews')}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 ${
                 activeTab === 'reviews' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
@@ -714,7 +714,7 @@ export default function App() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
-            <button 
+            <button
               onClick={() => setIsAddVehicleOpen(true)}
               className="hidden sm:flex items-center gap-2 px-3.5 py-2.5 bg-slate-900 hover:bg-slate-800 border border-cyan-950 text-xs font-bold text-slate-200 rounded-xl transition shadow-md"
             >
@@ -741,8 +741,8 @@ export default function App() {
                   <p className="text-xs font-bold text-white leading-tight">{currentUser.name}</p>
                   <p className="text-[10px] text-cyan-400 font-semibold">{currentUser.role}</p>
                 </div>
-                <button 
-                  onClick={() => setCurrentUser(null)} 
+                <button
+                  onClick={() => setCurrentUser(null)}
                   title="Logout"
                   className="p-2 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white rounded-xl transition"
                 >
@@ -750,7 +750,7 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={() => setIsAuthModalOpen(true)}
                 className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 rounded-xl text-xs font-black text-slate-950 transition shadow-xl shadow-cyan-500/20"
               >
@@ -767,7 +767,7 @@ export default function App() {
         <section className="relative max-w-7xl mx-auto px-6 pt-8 pb-4">
           <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-cyan-950/80 rounded-3xl p-8 relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
-            
+
             <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
               <div>
                 <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono font-bold tracking-widest uppercase mb-2">
@@ -807,13 +807,13 @@ export default function App() {
 
       {/* MAIN VIEW SYSTEM */}
       <main className="max-w-7xl mx-auto px-6 py-8">
-        
+
         {/* VIEW 1: VEHICLE CATALOG */}
         {activeTab === 'fleet' && (
           <div>
             {/* Search & Filter Bar */}
             <div className="bg-slate-950/80 backdrop-blur-xl border border-cyan-950/80 rounded-2xl p-4 mb-8 shadow-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-              
+
               {/* Category Filter */}
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest mr-2 flex items-center gap-1.5">
@@ -853,7 +853,7 @@ export default function App() {
 
                 <div className="relative min-w-[260px]">
                   <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input 
+                  <input
                     type="text"
                     placeholder="Search make, model, location..."
                     value={searchQuery}
@@ -868,20 +868,20 @@ export default function App() {
             {/* Luxury Vehicle Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredVehicles.map(v => (
-                <div 
-                  key={v.id} 
+                <div
+                  key={v.id}
                   className="group bg-slate-950/80 border border-cyan-950/80 hover:border-cyan-500/50 rounded-3xl overflow-hidden hover:shadow-[0_0_35px_rgba(6,182,212,0.15)] transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
                     {/* Vehicle Image Container */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer" onClick={() => setDetailVehicle(v)}>
-                      <img 
-                        src={v.imageUrl} 
-                        alt={v.model} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+                      <img
+                        src={v.imageUrl}
+                        alt={v.model}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                      
+
                       {/* Origin Tag */}
                       <div className="absolute top-3.5 left-3.5 flex gap-2">
                         <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-slate-950/80 text-cyan-400 border border-cyan-500/30 backdrop-blur-md">
@@ -891,8 +891,8 @@ export default function App() {
 
                       {/* Status Tag */}
                       <span className={`absolute top-3.5 right-3.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider backdrop-blur-md border ${
-                        v.status === 'available' 
-                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' 
+                        v.status === 'available'
+                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                           : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
                       }`}>
                         {v.status}
@@ -945,14 +945,14 @@ export default function App() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <button 
+                      <button
                         onClick={() => setDetailVehicle(v)}
                         className="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-xl transition border border-slate-800"
                         title="View Full Specifications"
                       >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button 
+                      <button
                         onClick={() => setBookingVehicle(v)}
                         disabled={v.status !== 'available'}
                         className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-300 ${
@@ -975,11 +975,11 @@ export default function App() {
         {/* VIEW 2: GPS RADAR MAP */}
         {activeTab === 'map' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
+
             {/* Map Visual Container */}
             <div className="lg:col-span-2 bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-6 relative min-h-[520px] flex flex-col justify-between overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:20px_20px] opacity-10 pointer-events-none" />
-              
+
               <div className="relative z-10 flex justify-between items-start">
                 <div>
                   <h2 className="text-xl font-bold text-white flex items-center gap-2">
@@ -1035,7 +1035,7 @@ export default function App() {
               </h3>
               <div className="flex flex-col gap-3 overflow-y-auto max-h-[480px] pr-2">
                 {vehicles.map(v => (
-                  <div 
+                  <div
                     key={v.id}
                     onClick={() => setFocusedVehicle(v)}
                     className={`p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-3.5 ${
@@ -1075,7 +1075,7 @@ export default function App() {
                   </div>
                   <h3 className="text-xl font-extrabold text-white">{branch.name}</h3>
                   <p className="text-xs text-cyan-400 font-bold mt-1">{branch.area}</p>
-                  
+
                   <div className="mt-6 flex flex-col gap-3 text-xs text-slate-300 font-medium">
                     <div className="flex items-start gap-2.5">
                       <MapPin className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -1092,7 +1092,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <button 
+                <button
                   onClick={() => {
                     setSelectedBranch(branch.id);
                     setActiveTab('fleet');
@@ -1136,9 +1136,9 @@ export default function App() {
               <h3 className="text-lg font-bold text-white mb-2">Leave a Client Review</h3>
               <div className="flex gap-2 mb-4">
                 {[1, 2, 3, 4, 5].map(star => (
-                  <button 
-                    key={star} 
-                    type="button" 
+                  <button
+                    key={star}
+                    type="button"
                     onClick={() => setNewRating(star)}
                     className="p-1"
                   >
@@ -1146,7 +1146,7 @@ export default function App() {
                   </button>
                 ))}
               </div>
-              <textarea 
+              <textarea
                 value={newComment}
                 onChange={e => setNewComment(e.target.value)}
                 placeholder="Share your experience with DriveFleet Cape Town..."
@@ -1191,7 +1191,7 @@ export default function App() {
                 <ShoppingCart className="w-12 h-12 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-lg font-bold text-white mb-1">Your cart is currently empty</h3>
                 <p className="text-xs text-slate-400 mb-6">Select a vehicle from our global fleet catalog to proceed.</p>
-                <button 
+                <button
                   onClick={() => setActiveTab('fleet')}
                   className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-extrabold rounded-xl text-xs shadow-lg"
                 >
@@ -1211,7 +1211,7 @@ export default function App() {
                           R{(item.type === 'purchase' ? item.vehicle.purchasePrice : item.vehicle.dailyRate * (item.rentalDays || 1)).toLocaleString()}
                         </span>
                       </div>
-                      <button 
+                      <button
                         onClick={() => handleRemoveFromCart(item.vehicle.id)}
                         className="p-2.5 text-slate-500 hover:text-red-400 transition"
                       >
@@ -1236,7 +1236,7 @@ export default function App() {
                     <span>Grand Total</span>
                     <span className="text-cyan-400 font-mono">R{grandTotal.toLocaleString()}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => setActiveTab('checkout')}
                     className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs mt-2 shadow-lg shadow-cyan-500/20"
                   >
@@ -1262,7 +1262,7 @@ export default function App() {
                 <p className="text-xs text-slate-300 max-w-md mx-auto mb-8 leading-relaxed">
                   Your executive booking has been dispatched to our Cape Town concierge team. You will receive real-time SMS tracking updates.
                 </p>
-                <button 
+                <button
                   onClick={() => {
                     setOrderComplete(false);
                     setActiveTab('fleet');
@@ -1275,7 +1275,7 @@ export default function App() {
             ) : (
               <form onSubmit={handleFinalCheckout} className="flex flex-col gap-6">
                 <h2 className="text-2xl font-black text-white border-b border-cyan-950 pb-4">Executive Checkout</h2>
-                
+
                 {/* Delivery Option */}
                 <div>
                   <label className="text-xs font-bold text-slate-400 uppercase block mb-3">Fulfillment Preference</label>
@@ -1304,8 +1304,8 @@ export default function App() {
                 {deliveryMethod === 'delivery' ? (
                   <div>
                     <label className="text-xs text-slate-400 block mb-2 font-medium">Cape Town Delivery Address</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       placeholder="e.g., Victoria Road, Camps Bay, Cape Town"
                       value={deliveryAddress}
@@ -1316,7 +1316,7 @@ export default function App() {
                 ) : (
                   <div>
                     <label className="text-xs text-slate-400 block mb-2 font-medium">Select Pickup Depot</label>
-                    <select 
+                    <select
                       value={selectedBranch}
                       onChange={e => setSelectedBranch(e.target.value)}
                       className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
@@ -1335,8 +1335,8 @@ export default function App() {
                   </h3>
                   <div>
                     <label className="text-xs text-slate-400 block mb-1">Cardholder Name</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       value={cardName}
                       onChange={e => setCardName(e.target.value)}
@@ -1345,8 +1345,8 @@ export default function App() {
                   </div>
                   <div>
                     <label className="text-xs text-slate-400 block mb-1">Card Number</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       value={cardNumber}
                       onChange={e => setCardNumber(e.target.value)}
@@ -1356,8 +1356,8 @@ export default function App() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs text-slate-400 block mb-1">Expiry Date</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         required
                         value={cardExpiry}
                         onChange={e => setCardExpiry(e.target.value)}
@@ -1366,8 +1366,8 @@ export default function App() {
                     </div>
                     <div>
                       <label className="text-xs text-slate-400 block mb-1">CVC</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         required
                         value={cardCvc}
                         onChange={e => setCardCvc(e.target.value)}
@@ -1377,249 +1377,10 @@ export default function App() {
                   </div>
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="w-full py-4 bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 text-slate-950 font-black rounded-xl text-xs mt-2 shadow-xl shadow-cyan-500/20 uppercase tracking-wider"
                 >
                   Confirm Reservation (R{grandTotal.toLocaleString()})
                 </button>
-              </form>
-            )}
-          </div>
-        )}
-
-      </main>
-
-      {/* MODAL 1: AUTH MODAL */}
-      {isAuthModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
-          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
-            <button 
-              onClick={() => setIsAuthModalOpen(false)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <h3 className="text-xl font-extrabold text-white mb-1">VIP Member Portal</h3>
-            <p className="text-xs text-slate-400 mb-6">Sign in for priority Cape Town fleet allocation.</p>
-
-            <form onSubmit={handleAuthSubmit} className="flex flex-col gap-4">
-              <div>
-                <label className="text-xs text-slate-400 block mb-1">Full Name</label>
-                <input 
-                  type="text" 
-                  placeholder="e.g. Sarah Jenkins"
-                  value={authName}
-                  onChange={e => setAuthName(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-slate-400 block mb-1">Email Address</label>
-                <input 
-                  type="email" 
-                  required
-                  placeholder="sarah@example.com"
-                  value={authEmail}
-                  onChange={e => setAuthEmail(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-slate-400 block mb-1">Password</label>
-                <input 
-                  type="password" 
-                  required
-                  placeholder="••••••••"
-                  value={authPassword}
-                  onChange={e => setAuthPassword(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
-                />
-              </div>
-              <button 
-                type="submit" 
-                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs mt-2"
-              >
-                Sign In
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL 2: BOOKING MODAL */}
-      {bookingVehicle && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
-          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
-            <button 
-              onClick={() => setBookingVehicle(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <h3 className="text-lg font-bold text-white mb-1">Configure Booking</h3>
-            <p className="text-xs text-cyan-400 font-bold mb-4">{bookingVehicle.make} {bookingVehicle.model}</p>
-
-            <div className="flex items-center gap-4 bg-slate-900 p-3 rounded-2xl border border-slate-800 mb-6">
-              <img src={bookingVehicle.imageUrl} alt={bookingVehicle.model} className="w-18 h-14 rounded-xl object-cover" />
-              <div>
-                <span className="text-xs font-bold text-white block">Daily Rate</span>
-                <span className="text-sm font-mono text-cyan-400 font-bold">R{bookingVehicle.dailyRate.toLocaleString()} / day</span>
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <label className="text-xs text-slate-400 block mb-2 font-medium">Rental Period (Days)</label>
-              <div className="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-xl p-2">
-                <button 
-                  onClick={() => setRentalDays(Math.max(1, rentalDays - 1))}
-                  className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
-                >
-                  -
-                </button>
-                <span className="font-mono font-bold text-white text-sm">{rentalDays} Days</span>
-                <button 
-                  onClick={() => setRentalDays(rentalDays + 1)}
-                  className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            <div className="border-t border-cyan-950 pt-4 mb-6 flex justify-between items-center text-xs">
-              <span className="text-slate-400">Total Calculation</span>
-              <span className="text-lg font-mono font-bold text-white">R{(bookingVehicle.dailyRate * rentalDays).toLocaleString()}</span>
-            </div>
-
-            <button 
-              onClick={handleBookVehicle}
-              className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
-            >
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL 3: SPECS DETAIL MODAL */}
-      {detailVehicle && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
-          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto shadow-2xl">
-            <button 
-              onClick={() => setDetailVehicle(null)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4">
-              <img src={detailVehicle.imageUrl} alt={detailVehicle.model} className="w-full h-full object-cover" />
-            </div>
-            <h3 className="text-xl font-extrabold text-white">{detailVehicle.make} {detailVehicle.model}</h3>
-            <p className="text-xs text-cyan-400 font-bold mb-6">{detailVehicle.year} • {detailVehicle.origin} Origin • {detailVehicle.category}</p>
-
-            <div className="grid grid-cols-2 gap-3 mb-6 text-xs">
-              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
-                <span className="text-slate-500 block text-[10px]">Output</span>
-                <span className="font-bold text-white font-mono">{detailVehicle.horsepower} HP</span>
-              </div>
-              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
-                <span className="text-slate-500 block text-[10px]">Acceleration (0-100)</span>
-                <span className="font-bold text-white font-mono">{detailVehicle.zeroToHundred}</span>
-              </div>
-              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
-                <span className="text-slate-500 block text-[10px]">Top Speed</span>
-                <span className="font-bold text-white font-mono">{detailVehicle.topSpeed}</span>
-              </div>
-              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
-                <span className="text-slate-500 block text-[10px]">Efficiency / Range</span>
-                <span className="font-bold text-white font-mono">{detailVehicle.rangeOrConsumption}</span>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <button 
-                onClick={() => handleAddToCart(detailVehicle, 'rental', 3)}
-                className="flex-1 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-bold rounded-xl text-xs"
-              >
-                Reserve (R{detailVehicle.dailyRate}/day)
-              </button>
-              <button 
-                onClick={() => handleAddToCart(detailVehicle, 'purchase')}
-                className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
-              >
-                Buy (R{(detailVehicle.purchasePrice / 1000000).toFixed(2)}M)
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL 4: ADD VEHICLE MODAL */}
-      {isAddVehicleOpen && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
-          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto shadow-2xl">
-            <button 
-              onClick={() => setIsAddVehicleOpen(false)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <h3 className="text-lg font-bold text-white mb-4">Add Fleet Vehicle</h3>
-
-            <form onSubmit={handleAddVehicle} className="flex flex-col gap-3 text-xs">
-              <input 
-                type="text" 
-                placeholder="Make (e.g. Porsche)"
-                required
-                value={newVehicle.make}
-                onChange={e => setNewVehicle({ ...newVehicle, make: e.target.value })}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
-              />
-              <input 
-                type="text" 
-                placeholder="Model (e.g. Taycan Turbo S)"
-                required
-                value={newVehicle.model}
-                onChange={e => setNewVehicle({ ...newVehicle, model: e.target.value })}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
-              />
-              <div className="grid grid-cols-2 gap-2">
-                <input 
-                  type="number" 
-                  placeholder="Daily Rate (ZAR)"
-                  required
-                  value={newVehicle.dailyRate}
-                  onChange={e => setNewVehicle({ ...newVehicle, dailyRate: Number(e.target.value) })}
-                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
-                />
-                <input 
-                  type="number" 
-                  placeholder="Purchase Price (ZAR)"
-                  required
-                  value={newVehicle.purchasePrice}
-                  onChange={e => setNewVehicle({ ...newVehicle, purchasePrice: Number(e.target.value) })}
-                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
-                />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Image URL"
-                value={newVehicle.imageUrl}
-                onChange={e => setNewVehicle({ ...newVehicle, imageUrl: e.target.value })}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
-              />
-              <button 
-                type="submit" 
-                className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl mt-2"
-              >
-                Add Vehicle
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-    </div>
-  );
-}
+              </
