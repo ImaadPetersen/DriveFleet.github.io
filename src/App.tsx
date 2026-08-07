@@ -5,7 +5,7 @@ import {
   BatteryCharging, Clock, ChevronRight, User, LogIn, LogOut, Star, 
   Award, HeartHandshake, HelpCircle, MessageSquare, Sparkles, Send,
   ShoppingCart, Trash2, CreditCard, ArrowLeft, Check, Lock, Gauge, UserPlus,
-  Compass, Globe, Building2, Phone, ExternalLink
+  Compass, Globe, Building2, Phone, ExternalLink, Info, CheckCircle
 } from 'lucide-react';
 
 // Cape Town Branch Model
@@ -611,20 +611,20 @@ export default function App() {
   const totalFleetValue = vehicles.reduce((acc, curr) => acc + curr.purchasePrice, 0);
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-blue-500 selection:text-white font-sans antialiased relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#06080d] text-slate-100 selection:bg-cyan-500 selection:text-black font-sans antialiased relative overflow-x-hidden">
       
       {/* Background Ambient Lights */}
-      <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="fixed top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[180px] pointer-events-none" />
+      <div className="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[180px] pointer-events-none" />
 
       {/* NAVIGATION BAR */}
-      <header className="sticky top-0 z-40 bg-[#07090e]/80 backdrop-blur-xl border-b border-slate-800/60 px-6 py-4">
+      <header className="sticky top-0 z-40 bg-[#06080d]/85 backdrop-blur-2xl border-b border-cyan-950/60 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Logo */}
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('fleet')}>
-            <div className="relative p-2.5 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl text-white shadow-lg shadow-blue-500/25">
-              <Car className="w-6 h-6" />
+            <div className="relative p-2.5 bg-gradient-to-tr from-cyan-500 via-teal-500 to-emerald-400 rounded-2xl text-slate-950 shadow-lg shadow-cyan-500/20">
+              <Car className="w-6 h-6 stroke-[2.5]" />
               <span className="absolute -top-1 -right-1 flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
@@ -633,18 +633,18 @@ export default function App() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-black tracking-tight text-white">DriveFleet</h1>
-                <span className="px-2 py-0.5 text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full">CAPE TOWN</span>
+                <span className="px-2 py-0.5 text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full shadow-[0_0_12px_rgba(6,182,212,0.15)]">CAPE TOWN</span>
               </div>
               <p className="text-xs text-slate-400">Japan • Germany • USA Luxury Fleet</p>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <div className="hidden xl:flex items-center p-1 bg-slate-900/90 border border-slate-800/80 rounded-2xl">
+          <div className="hidden xl:flex items-center p-1 bg-slate-900/90 border border-cyan-950/80 rounded-2xl">
             <button 
               onClick={() => setActiveTab('fleet')}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'fleet' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+                activeTab === 'fleet' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Car className="w-4 h-4" /> Global Catalog
@@ -652,7 +652,7 @@ export default function App() {
             <button 
               onClick={() => setActiveTab('map')}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'map' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+                activeTab === 'map' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Navigation className="w-4 h-4" /> Live Tracking Map
@@ -660,7 +660,7 @@ export default function App() {
             <button 
               onClick={() => setActiveTab('branches')}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'branches' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+                activeTab === 'branches' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Building2 className="w-4 h-4" /> Cape Town Branches
@@ -668,7 +668,7 @@ export default function App() {
             <button 
               onClick={() => setActiveTab('about')}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'about' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+                activeTab === 'about' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Sparkles className="w-4 h-4" /> Tech Specs
@@ -676,7 +676,7 @@ export default function App() {
             <button 
               onClick={() => setActiveTab('reviews')}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'reviews' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'text-slate-400 hover:text-white'
+                activeTab === 'reviews' ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
               <MessageSquare className="w-4 h-4" /> Reviews
@@ -687,29 +687,29 @@ export default function App() {
           <div className="flex items-center gap-3">
             <button 
               onClick={() => setIsAddVehicleOpen(true)}
-              className="hidden sm:flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-200 rounded-xl transition"
+              className="hidden sm:flex items-center gap-2 px-3 py-2 bg-slate-900 hover:bg-slate-800 border border-cyan-950 text-xs font-bold text-slate-200 rounded-xl transition"
             >
-              <Plus className="w-4 h-4 text-blue-400" /> Add Vehicle
+              <Plus className="w-4 h-4 text-cyan-400" /> Add Vehicle
             </button>
 
             {/* Cart Trigger */}
             <button
               onClick={() => setActiveTab('cart')}
-              className="relative p-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-slate-200 transition"
+              className="relative p-2.5 bg-slate-900 hover:bg-slate-800 border border-cyan-950 rounded-xl text-slate-200 transition"
             >
-              <ShoppingCart className="w-5 h-5 text-blue-400" />
+              <ShoppingCart className="w-5 h-5 text-cyan-400" />
               {cart.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#07090e]">
+                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#06080d]">
                   {cart.length}
                 </span>
               )}
             </button>
 
             {currentUser ? (
-              <div className="flex items-center gap-3 bg-slate-900/90 border border-slate-800/80 p-1.5 pl-3 rounded-2xl">
+              <div className="flex items-center gap-3 bg-slate-900/90 border border-cyan-950 p-1.5 pl-3 rounded-2xl">
                 <div>
                   <p className="text-xs font-bold text-white leading-tight">{currentUser.name}</p>
-                  <p className="text-[10px] text-blue-400 font-medium">{currentUser.role}</p>
+                  <p className="text-[10px] text-cyan-400 font-medium">{currentUser.role}</p>
                 </div>
                 <button 
                   onClick={() => setCurrentUser(null)} 
@@ -722,7 +722,7 @@ export default function App() {
             ) : (
               <button 
                 onClick={() => setIsAuthModalOpen(true)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl text-xs font-bold text-white transition shadow-lg shadow-blue-600/25"
+                className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 rounded-xl text-xs font-black text-slate-950 transition shadow-lg shadow-cyan-500/20"
               >
                 <LogIn className="w-4 h-4" /> Login / Sign Up
               </button>
@@ -737,7 +737,7 @@ export default function App() {
         <section className="max-w-7xl mx-auto px-6 pt-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
-            <div className="bg-slate-900/50 backdrop-blur-md border border-slate-800/80 p-5 rounded-2xl flex items-center justify-between">
+            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-400">Available Vehicles</p>
                 <h3 className="text-2xl font-bold text-white mt-1">{availableCount} <span className="text-xs text-slate-500 font-normal">/ {vehicles.length} Total</span></h3>
@@ -747,17 +747,17 @@ export default function App() {
               </div>
             </div>
 
-            <div className="bg-slate-900/50 backdrop-blur-md border border-slate-800/80 p-5 rounded-2xl flex items-center justify-between">
+            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-400">Cape Town Network</p>
                 <h3 className="text-2xl font-bold text-white mt-1">5 Branches</h3>
               </div>
-              <div className="p-3 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-xl">
+              <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-xl">
                 <Building2 className="w-5 h-5" />
               </div>
             </div>
 
-            <div className="bg-slate-900/50 backdrop-blur-md border border-slate-800/80 p-5 rounded-2xl flex items-center justify-between">
+            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-400">Total Fleet Valuation</p>
                 <h3 className="text-2xl font-bold text-white mt-1">R{(totalFleetValue / 1000000).toFixed(1)}M ZAR</h3>
@@ -767,12 +767,12 @@ export default function App() {
               </div>
             </div>
 
-            <div className="bg-slate-900/50 backdrop-blur-md border border-slate-800/80 p-5 rounded-2xl flex items-center justify-between">
+            <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-950/80 p-5 rounded-2xl flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-slate-400">Global Origins</p>
                 <h3 className="text-2xl font-bold text-white mt-1">Japan • DE • USA</h3>
               </div>
-              <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 rounded-xl">
+              <div className="p-3 bg-teal-500/10 border border-teal-500/20 text-teal-400 rounded-xl">
                 <Globe className="w-5 h-5" />
               </div>
             </div>
@@ -799,8 +799,8 @@ export default function App() {
                     onClick={() => setSelectedCategory(cat)}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                       selectedCategory === cat
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                        : 'bg-slate-900/80 text-slate-400 hover:bg-slate-800 border border-slate-800/80'
+                        ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20'
+                        : 'bg-slate-900/80 text-slate-400 hover:bg-slate-800 border border-cyan-950'
                     }`}
                   >
                     {cat}
@@ -810,14 +810,14 @@ export default function App() {
 
               {/* Origin Filters & Search */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-slate-900/90 p-1 border border-slate-800/80 rounded-xl">
+                <div className="flex items-center gap-1.5 bg-slate-900/90 p-1 border border-cyan-950 rounded-xl">
                   <span className="text-[10px] text-slate-500 font-bold uppercase px-2">Origin:</span>
                   {origins.map(orig => (
                     <button
                       key={orig}
                       onClick={() => setSelectedOrigin(orig)}
                       className={`px-3 py-1 rounded-lg text-xs font-semibold transition ${
-                        selectedOrigin === orig ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+                        selectedOrigin === orig ? 'bg-cyan-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
                       }`}
                     >
                       {orig}
@@ -832,7 +832,7 @@ export default function App() {
                     placeholder="Search make, model, or location..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full bg-slate-900/80 border border-slate-800/80 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50"
+                    className="w-full bg-slate-900/80 border border-cyan-950 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50"
                   />
                 </div>
               </div>
@@ -844,7 +844,7 @@ export default function App() {
               {filteredVehicles.map(v => (
                 <div 
                   key={v.id} 
-                  className="group bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-3xl overflow-hidden hover:border-slate-700 hover:shadow-2xl transition duration-300 flex flex-col justify-between"
+                  className="group bg-slate-900/50 backdrop-blur-xl border border-cyan-950 hover:border-cyan-500/50 rounded-3xl overflow-hidden hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition duration-300 flex flex-col justify-between"
                 >
                   <div>
                     <div className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer" onClick={() => setDetailVehicle(v)}>
@@ -856,7 +856,7 @@ export default function App() {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
                       
                       <div className="absolute top-3 left-3 flex gap-2">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 backdrop-blur-md">
+                        <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 backdrop-blur-md">
                           {v.origin}
                         </span>
                       </div>
@@ -874,221 +874,150 @@ export default function App() {
                           <h3 className="font-extrabold text-lg tracking-tight">{v.make} {v.model}</h3>
                           <p className="text-[11px] text-slate-300">{v.year} • {v.category}</p>
                         </div>
-                        <div className="flex items-center gap-1 text-amber-400 text-xs font-bold bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800">
-                          <Star className="w-3.5 h-3.5 fill-amber-400" /> {v.rating}
+                        <div className="flex items-center gap-1 text-amber-400 text-xs font-bold bg-slate-900/80 px-2 py-1 rounded-lg border border-slate-800">
+                          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                          <span>{v.rating.toFixed(1)}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="p-5 space-y-4">
-                      {/* Specs Badge Grid in KM/H */}
-                      <div className="grid grid-cols-3 gap-2 text-[10px] text-slate-300 bg-slate-950/60 p-3 rounded-2xl border border-slate-800/50 text-center">
-                        <div className="p-1 rounded-lg bg-slate-900/60">
-                          <p className="text-slate-500 font-medium">Power</p>
-                          <p className="font-bold text-blue-400">{v.horsepower} HP</p>
-                        </div>
-                        <div className="p-1 rounded-lg bg-slate-900/60">
-                          <p className="text-slate-500 font-medium">0-100 km/h</p>
-                          <p className="font-bold text-emerald-400">{v.zeroToHundred}</p>
-                        </div>
-                        <div className="p-1 rounded-lg bg-slate-900/60">
-                          <p className="text-slate-500 font-medium">Top Speed</p>
-                          <p className="font-bold text-indigo-400">{v.topSpeed}</p>
-                        </div>
+                    {/* Specs Row */}
+                    <div className="grid grid-cols-3 border-y border-cyan-950/60 bg-slate-950/40 text-center py-2.5 px-2 text-[11px] text-slate-400">
+                      <div className="flex flex-col items-center gap-1 border-r border-cyan-950/60">
+                        <Zap className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>{v.horsepower} HP</span>
                       </div>
+                      <div className="flex flex-col items-center gap-1 border-r border-cyan-950/60">
+                        <Gauge className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>{v.zeroToHundred}</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <Fuel className="w-3.5 h-3.5 text-cyan-400" />
+                        <span className="truncate max-w-[80px]">{v.rangeOrConsumption}</span>
+                      </div>
+                    </div>
 
-                      <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-                        <div className="flex items-center gap-1.5">
-                          <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                          <span className="truncate max-w-[140px] text-slate-300">{v.locationName}</span>
-                        </div>
-                        <span className="text-slate-400 text-[11px] font-mono">{v.rangeOrConsumption}</span>
-                      </div>
+                    {/* Location Badge */}
+                    <div className="px-5 py-3 flex items-center justify-between text-xs text-slate-400 border-b border-cyan-950/40">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <MapPin className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                        <span className="truncate">{v.locationName}</span>
+                      </span>
+                      <span className="text-[10px] text-slate-500 uppercase font-semibold">{v.fuelType}</span>
                     </div>
                   </div>
 
-                  <div className="p-5 pt-0 border-t border-slate-800/40 mt-auto space-y-3">
-                    <div className="flex justify-between items-end pt-3">
-                      <div>
-                        <p className="text-[10px] text-slate-400 uppercase font-semibold">Rental Rate</p>
-                        <span className="text-xl font-black text-white">R{v.dailyRate.toLocaleString()}</span>
-                        <span className="text-xs text-slate-400"> / day</span>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[10px] text-slate-400 uppercase font-semibold">Purchase Price</p>
-                        <span className="text-sm font-extrabold text-blue-400">R{v.purchasePrice.toLocaleString()}</span>
-                      </div>
+                  {/* Actions Bar */}
+                  <div className="p-5 flex items-center justify-between gap-3 bg-slate-900/30">
+                    <div>
+                      <span className="text-xs text-slate-400 block">Daily Rate</span>
+                      <span className="text-lg font-black text-white">R{v.dailyRate.toLocaleString()} <span className="text-[10px] font-normal text-slate-400">/day</span></span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-2">
                       <button 
+                        onClick={() => setDetailVehicle(v)}
+                        className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl transition"
+                      >
+                        Specs
+                      </button>
+                      <button 
+                        onClick={() => setBookingVehicle(v)}
                         disabled={v.status !== 'available'}
-                        onClick={() => {
-                          setBookingVehicle(v);
-                          setRentalDays(3);
-                        }}
-                        className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 ${
+                        className={`px-4 py-2 rounded-xl text-xs font-black transition ${
                           v.status === 'available'
-                            ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 active:scale-95'
+                            ? 'bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 shadow-md shadow-cyan-500/20'
                             : 'bg-slate-800 text-slate-500 cursor-not-allowed'
                         }`}
                       >
-                        Rent Vehicle
-                      </button>
-                      <button 
-                        disabled={v.status !== 'available'}
-                        onClick={() => handleAddToCart(v, 'purchase')}
-                        className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all border ${
-                          v.status === 'available'
-                            ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-                            : 'bg-slate-800/50 text-slate-600 border-slate-800 cursor-not-allowed'
-                        }`}
-                      >
-                        Buy Vehicle
+                        Book
                       </button>
                     </div>
                   </div>
+
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* VIEW 2: LIVE TRACKING MAP (CAPE TOWN TELEMETRY) */}
+        {/* VIEW 2: LIVE TELEMETRY MAP */}
         {activeTab === 'map' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            {/* Real-time Map Canvas Frame */}
-            <div className="lg:col-span-2 bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 relative overflow-hidden min-h-[520px] flex flex-col justify-between">
+            {/* Map Visual Container */}
+            <div className="lg:col-span-2 bg-slate-900/50 border border-cyan-950 rounded-3xl p-6 relative min-h-[500px] flex flex-col justify-between overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
               
-              {/* Top Status Bar */}
-              <div className="flex items-center justify-between z-10 bg-slate-950/80 backdrop-blur-md p-3.5 rounded-2xl border border-slate-800">
-                <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" /> Cape Town Live GPS Tracker
+              <div className="relative z-10 flex justify-between items-start">
+                <div>
+                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <Navigation className="w-5 h-5 text-cyan-400 animate-pulse" /> Live Fleet Radar
+                  </h2>
+                  <p className="text-xs text-slate-400">Real-time GPS telemetry across Greater Cape Town</p>
                 </div>
-                <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-                  <span>Region: Western Cape</span>
-                  <span>Precision: 0.1m</span>
+                <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-full text-xs font-mono font-bold">
+                  2.5s Latency • Live
+                </span>
+              </div>
+
+              {/* Simulated Map Graphical Representation */}
+              <div className="relative z-10 my-8 p-8 border border-cyan-950 bg-slate-950/60 rounded-2xl min-h-[300px] flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-20 h-20 rounded-full border-2 border-dashed border-cyan-500/40 mx-auto flex items-center justify-center animate-spin-slow mb-4">
+                    <Compass className="w-10 h-10 text-cyan-400" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white">{focusedVehicle.make} {focusedVehicle.model}</h3>
+                  <p className="text-xs text-cyan-400 mt-1">{focusedVehicle.locationName}</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">GPS: {focusedVehicle.lat.toFixed(4)}° S, {focusedVehicle.lng.toFixed(4)}° E</p>
                 </div>
               </div>
 
-              {/* Radar Grid Background */}
-              <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:24px_24px]" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-blue-500/10 rounded-full pointer-events-none animate-ping duration-1000 opacity-20" />
-
-              {/* Simulated Map Markers for Cape Town */}
-              <div className="relative my-auto flex flex-wrap items-center justify-center gap-8 p-8 z-10">
-                {vehicles.map(v => (
-                  <button
-                    key={v.id}
-                    onClick={() => setFocusedVehicle(v)}
-                    className={`group relative p-3.5 rounded-2xl border transition-all duration-300 flex items-center gap-3 ${
-                      focusedVehicle.id === v.id
-                        ? 'bg-blue-600 text-white border-blue-400 shadow-xl shadow-blue-600/40 scale-110 z-20'
-                        : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className={`p-2 rounded-xl ${focusedVehicle.id === v.id ? 'bg-white/20' : 'bg-slate-800 text-blue-400'}`}>
-                      <Car className="w-4 h-4" />
-                    </div>
-                    <div className="text-left">
-                      <p className="text-xs font-bold leading-tight">{v.make} {v.model}</p>
-                      <p className="text-[10px] opacity-80">{v.speed > 0 ? `${v.speed} km/h` : 'Parked'}</p>
-                    </div>
-                    
-                    {v.status === 'rented' && (
-                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#07090e] animate-bounce" />
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              {/* Bottom Selected Vehicle Quick Bar */}
-              <div className="z-10 bg-slate-950/90 backdrop-blur-md p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
-                    <Navigation className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white">{focusedVehicle.make} {focusedVehicle.model} ({focusedVehicle.origin})</h4>
-                    <p className="text-xs text-slate-400">Location: {focusedVehicle.locationName} • Coordinates: {focusedVehicle.lat.toFixed(4)}°S, {focusedVehicle.lng.toFixed(4)}°E</p>
-                  </div>
+              {/* Live Telemetry Bar */}
+              <div className="relative z-10 grid grid-cols-3 gap-4 bg-slate-950/80 p-4 rounded-xl border border-cyan-950/80 text-center">
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Speed</span>
+                  <span className="text-lg font-mono font-bold text-cyan-400">{focusedVehicle.speed} km/h</span>
                 </div>
-
-                <div className="flex items-center gap-4 text-xs">
-                  <div className="text-right">
-                    <p className="text-slate-400">Current Speed</p>
-                    <p className="font-mono font-bold text-emerald-400 text-sm">{focusedVehicle.speed} km/h</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-slate-400">Energy / Fuel</p>
-                    <p className="font-mono font-bold text-blue-400 text-sm">{focusedVehicle.fuelPercent}%</p>
-                  </div>
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Fuel/Battery</span>
+                  <span className="text-lg font-mono font-bold text-emerald-400">{focusedVehicle.fuelPercent}%</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Status</span>
+                  <span className="text-lg font-mono font-bold text-amber-400 capitalize">{focusedVehicle.status}</span>
                 </div>
               </div>
-
             </div>
 
-            {/* Telemetry Control Panel */}
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-blue-400" /> Active Vehicle Telemetry
-                </h3>
-                <p className="text-xs text-slate-400">Live CAN bus telemetry streams from Cape Town</p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80 space-y-3">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-400">Engine / Battery Output:</span>
-                    <span className="font-bold text-white">{focusedVehicle.horsepower} HP</span>
+            {/* Vehicle Selection List for Map */}
+            <div className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-6 flex flex-col gap-4">
+              <h3 className="text-lg font-bold text-white">Tracked Vehicles</h3>
+              <div className="flex flex-col gap-3 overflow-y-auto max-h-[480px] pr-2">
+                {vehicles.map(v => (
+                  <div 
+                    key={v.id}
+                    onClick={() => setFocusedVehicle(v)}
+                    className={`p-4 rounded-2xl border transition cursor-pointer flex items-center gap-4 ${
+                      focusedVehicle.id === v.id
+                        ? 'bg-cyan-500/10 border-cyan-500/50 text-white'
+                        : 'bg-slate-950/40 border-cyan-950/80 text-slate-300 hover:border-slate-700'
+                    }`}
+                  >
+                    <img src={v.imageUrl} alt={v.model} className="w-14 h-14 rounded-xl object-cover" />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-sm truncate text-white">{v.make} {v.model}</h4>
+                      <p className="text-xs text-slate-400 truncate">{v.locationName}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                          v.status === 'rented' ? 'bg-amber-500/20 text-amber-400' : 'bg-emerald-500/20 text-emerald-400'
+                        }`}>
+                          {v.status === 'rented' ? `${v.speed} km/h` : 'Stationary'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-400">Acceleration (0-100 km/h):</span>
-                    <span className="font-bold text-emerald-400">{focusedVehicle.zeroToHundred}</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-400">Max Track Velocity:</span>
-                    <span className="font-bold text-indigo-400">{focusedVehicle.topSpeed}</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-400">Efficiency / Range:</span>
-                    <span className="font-bold text-amber-400">{focusedVehicle.rangeOrConsumption}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-slate-400">
-                    <span>Battery / Fuel Cell Reserve</span>
-                    <span>{focusedVehicle.fuelPercent}%</span>
-                  </div>
-                  <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full transition-all duration-500 ${focusedVehicle.fuelPercent > 30 ? 'bg-emerald-500' : 'bg-amber-500'}`} 
-                      style={{ width: `${focusedVehicle.fuelPercent}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl space-y-2">
-                  <h4 className="text-xs font-bold text-blue-400 flex items-center gap-1.5">
-                    <Shield className="w-4 h-4" /> Autonomous Safety Guarantee
-                  </h4>
-                  <p className="text-[11px] text-slate-300 leading-relaxed">
-                    Vehicle is under continuous satellite lock in the Western Cape region with remote immobilizer and emergency roadside support active.
-                  </p>
-                </div>
-
-                <button 
-                  onClick={() => {
-                    setBookingVehicle(focusedVehicle);
-                    setRentalDays(3);
-                  }}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/30"
-                >
-                  Rent {focusedVehicle.make} {focusedVehicle.model} Now
-                </button>
+                ))}
               </div>
             </div>
 
@@ -1097,99 +1026,64 @@ export default function App() {
 
         {/* VIEW 3: CAPE TOWN BRANCHES */}
         {activeTab === 'branches' && (
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-black text-white">In-Person Cape Town Branches</h2>
-              <p className="text-slate-400 text-sm mt-1">Visit our physical pickup lounges and service centers across Cape Town</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {capeTownBranches.map(branch => (
-                <div key={branch.id} className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 space-y-4 hover:border-blue-500/50 transition">
-                  <div className="flex items-start justify-between">
-                    <div className="p-3 bg-blue-600/10 border border-blue-500/20 text-blue-400 rounded-2xl">
-                      <Building2 className="w-6 h-6" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {capeTownBranches.map(branch => (
+              <div key={branch.id} className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-6 flex flex-col justify-between hover:border-cyan-500/40 transition">
+                <div>
+                  <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-2xl w-fit mb-4">
+                    <Building2 className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">{branch.name}</h3>
+                  <p className="text-xs text-cyan-400 font-semibold mt-1">{branch.area}</p>
+                  
+                  <div className="mt-6 flex flex-col gap-3 text-xs text-slate-300">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" />
+                      <span>{branch.address}</span>
                     </div>
-                    <span className="text-[10px] font-bold px-2.5 py-1 bg-slate-800 text-slate-300 rounded-full border border-slate-700">
-                      {branch.area}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-white">{branch.name}</h3>
-                    <p className="text-xs text-slate-400 mt-1 flex items-start gap-1.5">
-                      <MapPin className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
-                      {branch.address}
-                    </p>
-                  </div>
-
-                  <div className="space-y-2 pt-2 border-t border-slate-800/60 text-xs text-slate-300">
                     <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-emerald-400" />
+                      <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
                       <span>{branch.phone}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-amber-400" />
+                      <Clock className="w-4 h-4 text-slate-500 flex-shrink-0" />
                       <span>{branch.hours}</span>
                     </div>
                   </div>
-
-                  <button 
-                    onClick={() => {
-                      setActiveTab('map');
-                    }}
-                    className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2"
-                  >
-                    View Nearby Fleet on Map <ExternalLink className="w-3.5 h-3.5" />
-                  </button>
                 </div>
-              ))}
-            </div>
+
+                <button 
+                  onClick={() => {
+                    setSelectedBranch(branch.id);
+                    setActiveTab('fleet');
+                  }}
+                  className="mt-6 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2"
+                >
+                  View Vehicles Here <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* VIEW 4: TECH & PLATFORM */}
+        {/* VIEW 4: TECH SPECS & ABOUT */}
         {activeTab === 'about' && (
-          <div className="space-y-8 max-w-4xl mx-auto">
-            <div className="text-center space-y-3">
-              <span className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-xs font-bold uppercase tracking-widest">
-                DriveFleet Cape Town Technology
-              </span>
-              <h2 className="text-3xl font-black text-white">Next-Generation Vehicle Ecosystem</h2>
-              <p className="text-slate-400 text-sm max-w-2xl mx-auto">
-                Bringing the world's most impressive Japanese, German, and American engineering directly to the roads of Cape Town.
-              </p>
-            </div>
+          <div className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-8 max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+              <Sparkles className="w-6 h-6 text-cyan-400" /> Platform Architecture & Specs
+            </h2>
+            <p className="text-sm text-slate-300 leading-relaxed mb-6">
+              DriveFleet Cape Town operates a real-time high-performance fleet management and luxury booking system tailored for South Africa&apos;s premier coastal destination.
+            </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-              <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-3">
-                <div className="p-3 bg-indigo-500/10 text-indigo-400 rounded-2xl w-fit">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-bold text-white">Global Brand Curation</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Direct imports from Japan (Nissan GT-R, Toyota GR), Germany (Porsche, BMW M, AMG), and USA (Tesla, Rivian).
-                </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+              <div className="p-4 bg-slate-950/60 border border-cyan-950 rounded-2xl">
+                <h4 className="font-bold text-cyan-400 text-sm mb-1">Real-time Telemetry</h4>
+                <p className="text-xs text-slate-400">Continuous 2.5s polling interval simulating GPS, speed, and energy capacity for active vehicles.</p>
               </div>
-
-              <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-3">
-                <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-2xl w-fit">
-                  <Navigation className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-bold text-white">Sub-Meter Telemetry</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Real-time telemetry tracking speed in km/h, range, battery health, and location across the Western Cape.
-                </p>
-              </div>
-
-              <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-3">
-                <div className="p-3 bg-blue-500/10 text-blue-400 rounded-2xl w-fit">
-                  <Building2 className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-bold text-white">Cape Town Support</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  5 physical branches offering instant pickup, concierge delivery, and 24/7 roadside assistance.
-                </p>
+              <div className="p-4 bg-slate-950/60 border border-cyan-950 rounded-2xl">
+                <h4 className="font-bold text-cyan-400 text-sm mb-1">Dual Transaction System</h4>
+                <p className="text-xs text-slate-400">Integrated cart supporting daily luxury rentals or outright vehicle acquisition with ZAR pricing and local VAT calculations.</p>
               </div>
             </div>
           </div>
@@ -1197,61 +1091,50 @@ export default function App() {
 
         {/* VIEW 5: REVIEWS */}
         {activeTab === 'reviews' && (
-          <div className="max-w-4xl mx-auto space-y-8">
-            <div>
-              <h2 className="text-2xl font-black text-white">Cape Town Driver Reviews</h2>
-              <p className="text-slate-400 text-sm mt-1">Real feedback from drivers in South Africa</p>
-            </div>
-
-            {/* Submit Review */}
-            <form onSubmit={handleAddReview} className="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-4">
-              <h3 className="text-sm font-bold text-white">Leave a Driver Review</h3>
-              
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-400">Rating:</span>
+          <div className="max-w-4xl mx-auto flex flex-col gap-8">
+            {/* Add Review Box */}
+            <form onSubmit={handleAddReview} className="bg-slate-900/50 border border-cyan-950 rounded-3xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">Leave a Review</h3>
+              <div className="flex gap-2 mb-4">
                 {[1, 2, 3, 4, 5].map(star => (
-                  <button
-                    type="button"
-                    key={star}
+                  <button 
+                    key={star} 
+                    type="button" 
                     onClick={() => setNewRating(star)}
-                    className="p-1 hover:scale-110 transition"
+                    className="p-1"
                   >
-                    <Star className={`w-5 h-5 ${star <= newRating ? 'fill-amber-400 text-amber-400' : 'text-slate-700'}`} />
+                    <Star className={`w-5 h-5 ${star <= newRating ? 'fill-amber-400 text-amber-400' : 'text-slate-600'}`} />
                   </button>
                 ))}
               </div>
-
               <textarea 
-                rows={3}
-                placeholder="Share your driving experience with DriveFleet..."
                 value={newComment}
                 onChange={e => setNewComment(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                placeholder="Share your DriveFleet Cape Town experience..."
+                className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 mb-4 h-24"
               />
-
-              <button 
-                type="submit" 
-                className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2"
-              >
-                <Send className="w-4 h-4" /> Post Review
+              <button type="submit" className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs transition">
+                Submit Review
               </button>
             </form>
 
             {/* Review List */}
-            <div className="space-y-4">
-              {reviews.map(r => (
-                <div key={r.id} className="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl space-y-2">
-                  <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4">
+              {reviews.map(rev => (
+                <div key={rev.id} className="bg-slate-900/40 border border-cyan-950 rounded-2xl p-6">
+                  <div className="flex items-center justify-between mb-3">
                     <div>
-                      <h4 className="text-sm font-bold text-white">{r.author}</h4>
-                      <p className="text-[10px] text-blue-400">{r.role}</p>
+                      <h4 className="font-bold text-white text-sm">{rev.author}</h4>
+                      <span className="text-[10px] text-cyan-400 font-medium">{rev.role}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-amber-400 text-xs font-bold">
-                      <Star className="w-3.5 h-3.5 fill-amber-400" /> {r.rating}.0
+                    <div className="flex items-center gap-1">
+                      {[...Array(rev.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      ))}
                     </div>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed">{r.comment}</p>
-                  <p className="text-[10px] text-slate-500">{r.date}</p>
+                  <p className="text-xs text-slate-300 leading-relaxed">{rev.comment}</p>
+                  <span className="text-[10px] text-slate-500 mt-3 block">{rev.date}</span>
                 </div>
               ))}
             </div>
@@ -1260,70 +1143,64 @@ export default function App() {
 
         {/* VIEW 6: CART */}
         {activeTab === 'cart' && (
-          <div className="max-w-4xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-black text-white">Your Reservation Cart</h2>
-                <p className="text-slate-400 text-sm mt-1">Review your selected rentals or purchases in South African Rands</p>
-              </div>
-              <button onClick={() => setActiveTab('fleet')} className="text-xs text-blue-400 hover:underline flex items-center gap-1">
-                <ArrowLeft className="w-4 h-4" /> Back to Catalog
-              </button>
-            </div>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <ShoppingCart className="w-6 h-6 text-cyan-400" /> Your Booking Cart
+            </h2>
 
             {cart.length === 0 ? (
-              <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-12 text-center space-y-4">
-                <ShoppingCart className="w-12 h-12 text-slate-600 mx-auto" />
-                <h3 className="text-lg font-bold text-white">Your cart is currently empty</h3>
-                <p className="text-xs text-slate-400">Explore our Japanese, German, and USA fleet to add a vehicle.</p>
-                <button onClick={() => setActiveTab('fleet')} className="px-6 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-xl">
-                  Browse Vehicles
+              <div className="bg-slate-900/40 border border-cyan-950 rounded-3xl p-12 text-center">
+                <ShoppingCart className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                <h3 className="text-lg font-bold text-white mb-2">Your cart is empty</h3>
+                <p className="text-xs text-slate-400 mb-6">Explore our global fleet catalog to select a vehicle.</p>
+                <button 
+                  onClick={() => setActiveTab('fleet')}
+                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+                >
+                  Browse Catalog
                 </button>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-4">
+                <div className="lg:col-span-2 flex flex-col gap-4">
                   {cart.map(item => (
-                    <div key={`${item.vehicle.id}-${item.type}`} className="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl flex items-center gap-4">
-                      <img src={item.vehicle.imageUrl} alt={item.vehicle.model} className="w-24 h-16 object-cover rounded-xl" />
-                      <div className="flex-1">
-                        <h4 className="text-sm font-bold text-white">{item.vehicle.make} {item.vehicle.model}</h4>
-                        <p className="text-xs text-slate-400 capitalize">{item.type} {item.type === 'rental' && `(${item.rentalDays} days)`}</p>
-                        <p className="text-xs font-bold text-blue-400 mt-1">
+                    <div key={item.vehicle.id} className="bg-slate-900/50 border border-cyan-950 rounded-2xl p-4 flex items-center justify-between gap-4">
+                      <img src={item.vehicle.imageUrl} alt={item.vehicle.model} className="w-20 h-16 rounded-xl object-cover" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-white text-sm truncate">{item.vehicle.make} {item.vehicle.model}</h4>
+                        <p className="text-xs text-cyan-400 capitalize">{item.type} {item.type === 'rental' ? `(${item.rentalDays} days)` : ''}</p>
+                        <span className="text-xs font-mono text-slate-300 mt-1 block">
                           R{(item.type === 'purchase' ? item.vehicle.purchasePrice : item.vehicle.dailyRate * (item.rentalDays || 1)).toLocaleString()}
-                        </p>
+                        </span>
                       </div>
-                      <button onClick={() => handleRemoveFromCart(item.vehicle.id)} className="p-2 text-slate-500 hover:text-red-400">
-                        <Trash2 className="w-4 h-4" />
+                      <button 
+                        onClick={() => handleRemoveFromCart(item.vehicle.id)}
+                        className="p-2 text-slate-500 hover:text-red-400 transition"
+                      >
+                        <Trash2 className="w-5 h-5" />
                       </button>
                     </div>
                   ))}
                 </div>
 
-                <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-4 h-fit">
-                  <h3 className="text-base font-bold text-white">Order Summary</h3>
-                  <div className="space-y-2 text-xs text-slate-300">
-                    <div className="flex justify-between">
-                      <span>Subtotal</span>
-                      <span>R{subtotal.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>15% SA VAT</span>
-                      <span>R{estimatedVAT.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Cape Town Delivery Fee</span>
-                      <span>R{deliveryFee.toLocaleString()}</span>
-                    </div>
-                    <div className="border-t border-slate-800 pt-2 flex justify-between font-bold text-sm text-white">
-                      <span>Grand Total</span>
-                      <span className="text-blue-400">R{grandTotal.toLocaleString()}</span>
-                    </div>
+                {/* Summary Box */}
+                <div className="bg-slate-900/50 border border-cyan-950 rounded-2xl p-6 h-fit flex flex-col gap-4">
+                  <h3 className="font-bold text-white text-base border-b border-cyan-950 pb-3">Order Summary</h3>
+                  <div className="flex justify-between text-xs text-slate-400">
+                    <span>Subtotal</span>
+                    <span className="text-white font-mono">R{subtotal.toLocaleString()}</span>
                   </div>
-
+                  <div className="flex justify-between text-xs text-slate-400">
+                    <span>Est. VAT (15%)</span>
+                    <span className="text-white font-mono">R{estimatedVAT.toLocaleString()}</span>
+                  </div>
+                  <div className="border-t border-cyan-950 pt-3 flex justify-between font-bold text-white text-sm">
+                    <span>Grand Total</span>
+                    <span className="text-cyan-400 font-mono">R{grandTotal.toLocaleString()}</span>
+                  </div>
                   <button 
                     onClick={() => setActiveTab('checkout')}
-                    className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/30"
+                    className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs mt-2"
                   >
                     Proceed to Checkout
                   </button>
@@ -1335,40 +1212,41 @@ export default function App() {
 
         {/* VIEW 7: CHECKOUT */}
         {activeTab === 'checkout' && (
-          <div className="max-w-2xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-black text-white">Complete Your Booking</h2>
-              <button onClick={() => setActiveTab('cart')} className="text-xs text-blue-400 hover:underline">
-                Return to Cart
-              </button>
-            </div>
-
+          <div className="max-w-2xl mx-auto bg-slate-900/50 border border-cyan-950 rounded-3xl p-8">
             {orderComplete ? (
-              <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 text-center space-y-4">
-                <div className="p-4 bg-emerald-500/10 text-emerald-400 rounded-full w-fit mx-auto">
-                  <Check className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-bold text-white">Order Confirmed!</h3>
-                <p className="text-xs text-slate-400">Order ID: <span className="font-mono text-white">{placedOrderId}</span></p>
-                <p className="text-xs text-slate-300 max-w-md mx-auto">
-                  Thank you for booking with DriveFleet Cape Town. A confirmation SMS & email with telemetry key codes have been dispatched.
+              <div className="text-center py-8">
+                <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-4 animate-bounce" />
+                <h2 className="text-2xl font-bold text-white mb-2">Order Confirmed!</h2>
+                <p className="text-xs text-slate-400 mb-2">Order Reference ID:</p>
+                <span className="px-4 py-2 bg-slate-950 border border-cyan-950 font-mono text-cyan-400 text-sm font-bold rounded-xl inline-block mb-6">
+                  {placedOrderId}
+                </span>
+                <p className="text-xs text-slate-300 max-w-md mx-auto mb-8">
+                  Your reservation request has been processed. A DriveFleet Cape Town representative will contact you shortly regarding delivery or pickup details.
                 </p>
-                <button onClick={() => { setOrderComplete(false); setActiveTab('fleet'); }} className="px-6 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-xl">
-                  Back to Fleet
+                <button 
+                  onClick={() => {
+                    setOrderComplete(false);
+                    setActiveTab('fleet');
+                  }}
+                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+                >
+                  Return to Fleet
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleFinalCheckout} className="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-6">
+              <form onSubmit={handleFinalCheckout} className="flex flex-col gap-6">
+                <h2 className="text-2xl font-bold text-white border-b border-cyan-950 pb-4">Checkout & Reserve</h2>
                 
-                {/* Fulfillment Method */}
-                <div className="space-y-3">
-                  <label className="text-xs font-bold text-slate-300">Fulfillment Method</label>
+                {/* Delivery Option */}
+                <div>
+                  <label className="text-xs font-bold text-slate-400 uppercase block mb-3">Fulfillment Method</label>
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
                       onClick={() => setDeliveryMethod('delivery')}
                       className={`p-3 rounded-xl border text-xs font-bold transition ${
-                        deliveryMethod === 'delivery' ? 'bg-blue-600/20 border-blue-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
+                        deliveryMethod === 'delivery' ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'bg-slate-950 border-cyan-950 text-slate-400'
                       }`}
                     >
                       Doorstep Delivery
@@ -1377,7 +1255,7 @@ export default function App() {
                       type="button"
                       onClick={() => setDeliveryMethod('pickup')}
                       className={`p-3 rounded-xl border text-xs font-bold transition ${
-                        deliveryMethod === 'pickup' ? 'bg-blue-600/20 border-blue-500 text-white' : 'bg-slate-950 border-slate-800 text-slate-400'
+                        deliveryMethod === 'pickup' ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400' : 'bg-slate-950 border-cyan-950 text-slate-400'
                       }`}
                     >
                       Branch Pickup
@@ -1386,24 +1264,24 @@ export default function App() {
                 </div>
 
                 {deliveryMethod === 'delivery' ? (
-                  <div className="space-y-2">
-                    <label className="text-xs text-slate-400">Cape Town Delivery Address</label>
+                  <div>
+                    <label className="text-xs text-slate-400 block mb-2">Delivery Address (Cape Town Area)</label>
                     <input 
+                      type="text" 
                       required
-                      type="text"
-                      placeholder="e.g. 15 Victoria Rd, Camps Bay, Cape Town"
+                      placeholder="e.g., 12 Camps Bay Drive, Camps Bay, Cape Town"
                       value={deliveryAddress}
                       onChange={e => setDeliveryAddress(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500"
+                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                     />
                   </div>
                 ) : (
-                  <div className="space-y-2">
-                    <label className="text-xs text-slate-400">Select Pickup Branch</label>
-                    <select
+                  <div>
+                    <label className="text-xs text-slate-400 block mb-2">Select Pickup Branch</label>
+                    <select 
                       value={selectedBranch}
                       onChange={e => setSelectedBranch(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500"
+                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-cyan-500/50"
                     >
                       {capeTownBranches.map(b => (
                         <option key={b.id} value={b.id}>{b.name} ({b.area})</option>
@@ -1412,55 +1290,64 @@ export default function App() {
                   </div>
                 )}
 
-                {/* Payment Information */}
-                <div className="space-y-3 pt-4 border-t border-slate-800">
-                  <h4 className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                    <Lock className="w-4 h-4 text-emerald-400" /> Payment Details (ZAR)
-                  </h4>
-
-                  <input 
-                    required
-                    type="text"
-                    placeholder="Cardholder Name"
-                    value={cardName}
-                    onChange={e => setCardName(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500"
-                  />
-
-                  <input 
-                    required
-                    type="text"
-                    placeholder="Card Number"
-                    value={cardNumber}
-                    onChange={e => setCardNumber(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500"
-                  />
-
-                  <div className="grid grid-cols-2 gap-3">
+                {/* Payment Fields */}
+                <div className="border-t border-cyan-950 pt-4 flex flex-col gap-4">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-cyan-400" /> Secure Payment Information
+                  </h3>
+                  <div>
+                    <label className="text-xs text-slate-400 block mb-1">Cardholder Name</label>
                     <input 
+                      type="text" 
                       required
-                      type="text"
-                      placeholder="MM/YY"
-                      value={cardExpiry}
-                      onChange={e => setCardExpiry(e.target.value)}
-                      className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500"
+                      placeholder="John Doe"
+                      value={cardName}
+                      onChange={e => setCardName(e.target.value)}
+                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                     />
+                  </div>
+                  <div>
+                    <label className="text-xs text-slate-400 block mb-1">Card Number</label>
                     <input 
+                      type="text" 
                       required
-                      type="text"
-                      placeholder="CVC"
-                      value={cardCvc}
-                      onChange={e => setCardCvc(e.target.value)}
-                      className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500"
+                      placeholder="4000 0000 0000 0000"
+                      value={cardNumber}
+                      onChange={e => setCardNumber(e.target.value)}
+                      className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                     />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-slate-400 block mb-1">Expiry Date</label>
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="MM/YY"
+                        value={cardExpiry}
+                        onChange={e => setCardExpiry(e.target.value)}
+                        className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-slate-400 block mb-1">CVC</label>
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="123"
+                        value={cardCvc}
+                        onChange={e => setCardCvc(e.target.value)}
+                        className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <button 
-                  type="submit"
-                  className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/30"
+                  type="submit" 
+                  className="w-full py-3.5 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-400 text-slate-950 font-extrabold rounded-xl text-xs mt-4 shadow-lg shadow-cyan-500/20"
                 >
-                  Pay R{grandTotal.toLocaleString()} ZAR & Confirm Booking
+                  Complete Reservation (R{grandTotal.toLocaleString()})
                 </button>
               </form>
             )}
@@ -1469,140 +1356,230 @@ export default function App() {
 
       </main>
 
-      {/* RENTAL BOOKING MODAL */}
-      {bookingVehicle && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-md w-full space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-base font-bold text-white">Rent {bookingVehicle.make} {bookingVehicle.model}</h3>
-              <button onClick={() => setBookingVehicle(null)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
-            </div>
-
-            <div className="space-y-3 text-xs">
-              <div>
-                <label className="text-slate-400">Duration (Days)</label>
-                <input 
-                  type="number" 
-                  min={1} 
-                  max={30} 
-                  value={rentalDays} 
-                  onChange={e => setRentalDays(Number(e.target.value))}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 mt-1 text-white focus:outline-none"
-                />
-              </div>
-
-              <div className="p-3 bg-slate-950 rounded-xl space-y-1">
-                <div className="flex justify-between text-slate-400"><span>Daily Rate:</span><span>R{bookingVehicle.dailyRate.toLocaleString()}</span></div>
-                <div className="flex justify-between font-bold text-white pt-1 border-t border-slate-800">
-                  <span>Total Rental Price:</span>
-                  <span className="text-blue-400">R{(bookingVehicle.dailyRate * rentalDays).toLocaleString()} ZAR</span>
-                </div>
-              </div>
-            </div>
-
+      {/* MODAL 1: AUTH MODAL */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative">
             <button 
-              onClick={handleBookVehicle}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition"
+              onClick={() => setIsAuthModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
             >
-              Confirm & Add to Cart
+              <X className="w-5 h-5" />
             </button>
-          </div>
-        </div>
-      )}
+            <h3 className="text-xl font-bold text-white mb-2">DriveFleet VIP Access</h3>
+            <p className="text-xs text-slate-400 mb-6">Sign in or register for express luxury rentals in Cape Town.</p>
 
-      {/* ADD VEHICLE MODAL */}
-      {isAddVehicleOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-lg w-full space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center">
-              <h3 className="text-base font-bold text-white">Add New Fleet Vehicle</h3>
-              <button onClick={() => setIsAddVehicleOpen(false)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
-            </div>
-
-            <form onSubmit={handleAddVehicle} className="space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-3">
+            <form onSubmit={handleAuthSubmit} className="flex flex-col gap-4">
+              <div>
+                <label className="text-xs text-slate-400 block mb-1">Full Name</label>
                 <input 
-                  required placeholder="Make (e.g. Nissan)" value={newVehicle.make} 
-                  onChange={e => setNewVehicle({...newVehicle, make: e.target.value})}
-                  className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
-                />
-                <input 
-                  required placeholder="Model (e.g. GT-R)" value={newVehicle.model} 
-                  onChange={e => setNewVehicle({...newVehicle, model: e.target.value})}
-                  className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
+                  type="text" 
+                  placeholder="e.g. Sarah Jenkins"
+                  value={authName}
+                  onChange={e => setAuthName(e.target.value)}
+                  className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                 />
               </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <select 
-                  value={newVehicle.origin} 
-                  onChange={e => setNewVehicle({...newVehicle, origin: e.target.value as any})}
-                  className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-white"
-                >
-                  <option value="Japan">Japan</option>
-                  <option value="Germany">Germany</option>
-                  <option value="USA">USA</option>
-                  <option value="Other">Other</option>
-                </select>
-
-                <select 
-                  value={newVehicle.category} 
-                  onChange={e => setNewVehicle({...newVehicle, category: e.target.value})}
-                  className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-white"
-                >
-                  {categories.filter(c => c !== 'All').map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-slate-400 block mb-1">Email Address</label>
                 <input 
-                  type="number" placeholder="Daily Rate (ZAR)" value={newVehicle.dailyRate} 
-                  onChange={e => setNewVehicle({...newVehicle, dailyRate: Number(e.target.value)})}
-                  className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
-                />
-                <input 
-                  type="number" placeholder="Purchase Price (ZAR)" value={newVehicle.purchasePrice} 
-                  onChange={e => setNewVehicle({...newVehicle, purchasePrice: Number(e.target.value)})}
-                  className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
+                  type="email" 
+                  required
+                  placeholder="sarah@example.com"
+                  value={authEmail}
+                  onChange={e => setAuthEmail(e.target.value)}
+                  className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
                 />
               </div>
-
-              <input 
-                placeholder="Image URL" value={newVehicle.imageUrl} 
-                onChange={e => setNewVehicle({...newVehicle, imageUrl: e.target.value})}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
-              />
-
-              <button type="submit" className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl">
-                Add Vehicle to Cape Town Fleet
+              <div>
+                <label className="text-xs text-slate-400 block mb-1">Password</label>
+                <input 
+                  type="password" 
+                  required
+                  placeholder="••••••••"
+                  value={authPassword}
+                  onChange={e => setAuthPassword(e.target.value)}
+                  className="w-full bg-slate-950 border border-cyan-950 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                />
+              </div>
+              <button 
+                type="submit" 
+                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs mt-2"
+              >
+                Continue
               </button>
             </form>
           </div>
         </div>
       )}
 
-      {/* AUTH MODAL */}
-      {isAuthModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-sm w-full space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-base font-bold text-white">DriveFleet Sign In</h3>
-              <button onClick={() => setIsAuthModalOpen(false)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
+      {/* MODAL 2: BOOKING MODAL */}
+      {bookingVehicle && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative">
+            <button 
+              onClick={() => setBookingVehicle(null)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-lg font-bold text-white mb-1">Configure Rental</h3>
+            <p className="text-xs text-cyan-400 mb-4">{bookingVehicle.make} {bookingVehicle.model}</p>
+
+            <div className="flex items-center gap-4 bg-slate-950 p-3 rounded-2xl border border-cyan-950/60 mb-6">
+              <img src={bookingVehicle.imageUrl} alt={bookingVehicle.model} className="w-16 h-12 rounded-xl object-cover" />
+              <div>
+                <span className="text-xs font-bold text-white block">Daily Rate</span>
+                <span className="text-sm font-mono text-cyan-400 font-bold">R{bookingVehicle.dailyRate.toLocaleString()} / day</span>
+              </div>
             </div>
 
-            <form onSubmit={handleAuthSubmit} className="space-y-3 text-xs">
+            <div className="mb-6">
+              <label className="text-xs text-slate-400 block mb-2">Duration (Days)</label>
+              <div className="flex items-center justify-between bg-slate-950 border border-cyan-950 rounded-xl p-2">
+                <button 
+                  onClick={() => setRentalDays(Math.max(1, rentalDays - 1))}
+                  className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
+                >
+                  -
+                </button>
+                <span className="font-mono font-bold text-white text-sm">{rentalDays} Days</span>
+                <button 
+                  onClick={() => setRentalDays(rentalDays + 1)}
+                  className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t border-cyan-950 pt-4 mb-6 flex justify-between items-center text-xs">
+              <span className="text-slate-400">Total Price</span>
+              <span className="text-lg font-mono font-bold text-white">R{(bookingVehicle.dailyRate * rentalDays).toLocaleString()}</span>
+            </div>
+
+            <button 
+              onClick={handleBookVehicle}
+              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+            >
+              Add Rental to Cart
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 3: DETAIL / SPECS MODAL */}
+      {detailVehicle && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={() => setDetailVehicle(null)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4">
+              <img src={detailVehicle.imageUrl} alt={detailVehicle.model} className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-xl font-bold text-white">{detailVehicle.make} {detailVehicle.model}</h3>
+            <p className="text-xs text-cyan-400 mb-6">{detailVehicle.year} • {detailVehicle.origin} Origin • {detailVehicle.category}</p>
+
+            <div className="grid grid-cols-2 gap-3 mb-6 text-xs">
+              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Horsepower</span>
+                <span className="font-bold text-white">{detailVehicle.horsepower} HP</span>
+              </div>
+              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">0-100 km/h</span>
+                <span className="font-bold text-white">{detailVehicle.zeroToHundred}</span>
+              </div>
+              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Top Speed</span>
+                <span className="font-bold text-white">{detailVehicle.topSpeed}</span>
+              </div>
+              <div className="p-3 bg-slate-950 border border-cyan-950 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Efficiency / Range</span>
+                <span className="font-bold text-white">{detailVehicle.rangeOrConsumption}</span>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button 
+                onClick={() => handleAddToCart(detailVehicle, 'rental', 3)}
+                className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs"
+              >
+                Rent (R{detailVehicle.dailyRate}/day)
+              </button>
+              <button 
+                onClick={() => handleAddToCart(detailVehicle, 'purchase')}
+                className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl text-xs"
+              >
+                Buy (R{(detailVehicle.purchasePrice / 1000000).toFixed(2)}M)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 4: ADD VEHICLE MODAL */}
+      {isAddVehicleOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={() => setIsAddVehicleOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-lg font-bold text-white mb-4">Add Vehicle to Fleet</h3>
+
+            <form onSubmit={handleAddVehicle} className="flex flex-col gap-3 text-xs">
               <input 
-                required type="email" placeholder="Email address" value={authEmail} 
-                onChange={e => setAuthEmail(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
+                type="text" 
+                placeholder="Make (e.g. Porsche)"
+                required
+                value={newVehicle.make}
+                onChange={e => setNewVehicle({ ...newVehicle, make: e.target.value })}
+                className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
               />
               <input 
-                type="password" placeholder="Password" value={authPassword} 
-                onChange={e => setAuthPassword(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-white" 
+                type="text" 
+                placeholder="Model (e.g. Taycan Turbo S)"
+                required
+                value={newVehicle.model}
+                onChange={e => setNewVehicle({ ...newVehicle, model: e.target.value })}
+                className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
               />
-              <button type="submit" className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl">
-                Sign In
+              <div className="grid grid-cols-2 gap-2">
+                <input 
+                  type="number" 
+                  placeholder="Daily Rate (ZAR)"
+                  required
+                  value={newVehicle.dailyRate}
+                  onChange={e => setNewVehicle({ ...newVehicle, dailyRate: Number(e.target.value) })}
+                  className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                />
+                <input 
+                  type="number" 
+                  placeholder="Purchase Price (ZAR)"
+                  required
+                  value={newVehicle.purchasePrice}
+                  onChange={e => setNewVehicle({ ...newVehicle, purchasePrice: Number(e.target.value) })}
+                  className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+                />
+              </div>
+              <input 
+                type="text" 
+                placeholder="Image URL"
+                value={newVehicle.imageUrl}
+                onChange={e => setNewVehicle({ ...newVehicle, imageUrl: e.target.value })}
+                className="bg-slate-950 border border-cyan-950 rounded-xl p-3 text-white placeholder-slate-600"
+              />
+              <button 
+                type="submit" 
+                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold rounded-xl mt-2"
+              >
+                Add Vehicle
               </button>
             </form>
           </div>
