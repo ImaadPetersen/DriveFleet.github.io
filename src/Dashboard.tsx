@@ -7,6 +7,9 @@ import VehicleComparison from "../components/VehicleComparison";
 import FleetCommandCenter from "../components/FleetCommandCenter";
 import RevenueCharts from "../components/RevenueCharts";
 import LiveTelemetry from "../components/LiveTelemetry";
+import BookingEngine from "../components/BookingEngine";
+import CustomerPortal from "../components/CustomerPortal";
+import WishlistPanel from "../components/WishlistPanel";
 
 export default function Dashboard() {
   return (
