@@ -4,6 +4,10 @@ import FleetMap from "../components/FleetMap";
 import AIConcierge from "../components/AIConcierge";
 import VehicleComparison from "../components/VehicleComparison";
 
+import FleetCommandCenter from "../components/FleetCommandCenter";
+import RevenueCharts from "../components/RevenueCharts";
+import LiveTelemetry from "../components/LiveTelemetry";
+
 export default function Dashboard() {
   return (
     <div className="bg-[#050816] min-h-screen">
