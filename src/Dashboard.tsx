@@ -18,6 +18,13 @@ export default function Dashboard() {
 
         <FleetStats />
 
+        <FleetCommandCenter />
+
+<div className="grid lg:grid-cols-2 gap-8 mt-12">
+  <RevenueCharts />
+  <LiveTelemetry />
+</div>
+
         <div className="mt-12">
           <FleetMap />
         </div>
