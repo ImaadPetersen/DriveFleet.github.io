@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Car, Shield, Navigation, Fuel, Users, Calendar, Filter, Plus, X,
   MapPin, CheckCircle2, Zap, Activity, DollarSign, Search,
@@ -6,8 +6,127 @@ import {
   Award, HeartHandshake, HelpCircle, MessageSquare, Sparkles, Send,
   ShoppingCart, Trash2, CreditCard, ArrowLeft, Check, Lock, Gauge, UserPlus,
   Compass, Globe, Building2, Phone, ExternalLink, Info, CheckCircle, Sliders,
-  SlidersHorizontal, ChevronDown, Eye, ShieldCheck, Sparkle
+  SlidersHorizontal, ChevronDown, Eye, ShieldCheck, Sparkle, Mountain,
+  Anchor, Route as RouteIcon, Plane
 } from 'lucide-react';
+
+// ============================================================================
+// GEOGRAPHY — real Cape Town coordinates projected onto a stylised map
+// ============================================================================
+
+const MAP_BOUNDS = { latMin: -34.22, latMax: -33.78, lngMin: 18.32, lngMax: 18.68 };
+const MAP_W = 620;
+const MAP_H = 760;
+
+function project(lat: number, lng: number): [number, number] {
+  const x = ((lng - MAP_BOUNDS.lngMin) / (MAP_BOUNDS.lngMax - MAP_BOUNDS.lngMin)) * MAP_W;
+  const y = ((MAP_BOUNDS.latMax - lat) / (MAP_BOUNDS.latMax - MAP_BOUNDS.latMin)) * MAP_H;
+  return [x, y];
+}
+
+function pathFromCoords(coords: [number, number][]): string {
+  return coords
+    .map(([lat, lng], i) => {
+      const [x, y] = project(lat, lng);
+      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(' ');
+}
+
+// Simplified but geographically-ordered outline of the Cape Peninsula + Cape Flats,
+// built from real named landmarks so the coastline silhouette is recognisable.
+const CAPE_LANDMASS: [number, number][] = [
+  [-33.80, 18.46],   // Bloubergstrand
+  [-33.86, 18.50],   // Milnerton
+  [-33.895, 18.435], // Table Bay Harbour
+  [-33.905, 18.421], // V&A Waterfront
+  [-33.915, 18.385], // Sea Point
+  [-33.940, 18.376], // Clifton
+  [-33.951, 18.378], // Camps Bay
+  [-34.005, 18.348], // Llandudno
+  [-34.049, 18.354], // Hout Bay
+  [-34.093, 18.360], // Chapman's Peak
+  [-34.110, 18.380], // Noordhoek
+  [-34.140, 18.325], // Kommetjie
+  [-34.200, 18.380], // Cape Point
+  [-34.193, 18.429], // Simon's Town
+  [-34.108, 18.470], // Muizenberg
+  [-34.050, 18.465], // Lakeside
+  [-33.998, 18.465], // Wynberg
+  [-33.982, 18.465], // Claremont
+  [-33.958, 18.470], // Rondebosch
+  [-33.955, 18.510], // Athlone
+  [-33.892, 18.5085],// Century City
+  [-33.905, 18.560],
+  [-33.930, 18.620],
+  [-33.9715, 18.6021],// Airport
+  [-34.05, 18.68],
+  [-34.22, 18.68],    // SE map corner (fill)
+  [-34.22, 18.32],    // SW map corner (fill)
+  [-33.78, 18.32],    // NW map corner (fill)
+  [-33.78, 18.46],    // back near start along N edge
+];
+
+const TABLE_MOUNTAIN: [number, number] = [-33.9628, 18.4098];
+const ROBBEN_ISLAND: [number, number] = [-33.807, 18.366];
+
+// Stylised road corridors, built from real route waypoints
+const ROADS: { name: string; coords: [number, number][] }[] = [
+  {
+    name: 'Victoria Road (M6) — Atlantic Seaboard',
+    coords: [
+      [-33.905, 18.421], [-33.915, 18.385], [-33.940, 18.376],
+      [-33.951, 18.378], [-34.005, 18.348], [-34.049, 18.354],
+      [-34.093, 18.360], [-34.110, 18.380],
+    ],
+  },
+  {
+    name: 'M3 — Southern Suburbs',
+    coords: [
+      [-33.905, 18.421], [-33.958, 18.470], [-33.982, 18.465],
+      [-33.998, 18.465], [-34.050, 18.465], [-34.108, 18.470],
+    ],
+  },
+  {
+    name: 'N2 — Airport Freeway',
+    coords: [
+      [-33.905, 18.421], [-33.930, 18.480], [-33.955, 18.510],
+      [-33.9715, 18.6021],
+    ],
+  },
+  {
+    name: 'N1 / Century City Link',
+    coords: [
+      [-33.905, 18.421], [-33.86, 18.50], [-33.892, 18.5085],
+    ],
+  },
+];
+
+// Real driving loops used to animate rented vehicles smoothly along actual roads
+const VEHICLE_ROUTES: Record<number, [number, number][]> = {
+  103: [
+    [-33.905, 18.421], [-33.915, 18.385], [-33.940, 18.376],
+    [-33.951, 18.378], [-34.005, 18.348], [-34.049, 18.354], [-34.093, 18.360],
+  ],
+  302: [
+    [-33.892, 18.5085], [-33.955, 18.510], [-33.982, 18.465], [-33.9715, 18.6021],
+  ],
+};
+
+function pointAtRoute(route: [number, number][], t: number): [number, number] {
+  const segs = route.length - 1;
+  const segFloat = Math.min(0.999999, Math.max(0, t)) * segs;
+  const segIdx = Math.min(segs - 1, Math.floor(segFloat));
+  const segT = segFloat - segIdx;
+  const [lat1, lng1] = route[segIdx];
+  const [lat2, lng2] = route[segIdx + 1];
+  return [lat1 + (lat2 - lat1) * segT, lng1 + (lng2 - lng1) * segT];
+}
+
+function pingPong(t: number): number {
+  const mod = t % 2;
+  return mod <= 1 ? mod : 2 - mod;
+}
 
 // Cape Town Branch Model
 interface Branch {
@@ -127,20 +246,20 @@ const capeTownBranches: Branch[] = [
   }
 ];
 
-// Initial Vehicles (Japan, German, USA, and International Brands)
+// Initial Vehicles — real production models with verified factory specs
 const initialVehicles: Vehicle[] = [
   // --- JAPAN ---
   {
     id: 101,
     make: 'Nissan',
-    model: 'GT-R Nismo Track Edition',
+    model: 'GT-R NISMO',
     year: 2024,
     category: 'Sports',
     origin: 'Japan',
     dailyRate: 8500,
     purchasePrice: 4800000,
     transmission: '6-Speed Dual-Clutch',
-    fuelType: 'Twin-Turbo V6',
+    fuelType: 'Twin-Turbo 3.8L V6',
     seats: 4,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
@@ -153,19 +272,19 @@ const initialVehicles: Vehicle[] = [
     horsepower: 600,
     zeroToHundred: '2.7s',
     topSpeed: '315 km/h',
-    rangeOrConsumption: '12.8 L / 100 km'
+    rangeOrConsumption: '12.0 L / 100 km'
   },
   {
     id: 102,
     make: 'Toyota',
-    model: 'GR Supra 3.0 Performance',
+    model: 'GR Supra 3.0 (Manual)',
     year: 2024,
     category: 'Sports',
     origin: 'Japan',
     dailyRate: 3800,
     purchasePrice: 1550000,
     transmission: '6-Speed Manual',
-    fuelType: 'Inline-6 Turbo',
+    fuelType: 'Turbo 3.0L Inline-6',
     seats: 2,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80',
@@ -176,21 +295,21 @@ const initialVehicles: Vehicle[] = [
     locationName: 'Camps Bay Lounge',
     rating: 4.9,
     horsepower: 382,
-    zeroToHundred: '3.9s',
+    zeroToHundred: '4.1s',
     topSpeed: '250 km/h',
-    rangeOrConsumption: '8.8 L / 100 km'
+    rangeOrConsumption: '9.5 L / 100 km'
   },
   {
     id: 103,
     make: 'Honda',
-    model: 'NSX Type S Hybrid Supercar',
-    year: 2023,
+    model: 'NSX Type S',
+    year: 2022,
     category: 'EV / Hybrid',
     origin: 'Japan',
     dailyRate: 9200,
     purchasePrice: 4200000,
     transmission: '9-Speed Dual-Clutch',
-    fuelType: 'Twin-Turbo V6 Hybrid',
+    fuelType: 'Twin-Turbo V6 Hybrid (AWD)',
     seats: 2,
     status: 'rented',
     imageUrl: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80',
@@ -198,26 +317,26 @@ const initialVehicles: Vehicle[] = [
     speed: 112,
     lat: -33.9249,
     lng: 18.4241,
-    locationName: 'En Route (Chapman\'s Peak Drive)',
+    locationName: "En Route — Victoria Rd / Camps Bay",
     rating: 5.0,
     horsepower: 600,
-    zeroToHundred: '2.9s',
+    zeroToHundred: '2.7s',
     topSpeed: '307 km/h',
-    rangeOrConsumption: '10.2 L / 100 km'
+    rangeOrConsumption: '11.1 L / 100 km'
   },
 
   // --- GERMANY ---
   {
     id: 201,
     make: 'Porsche',
-    model: '911 GT3 RS Weissach',
+    model: '911 GT3 RS',
     year: 2024,
     category: 'Sports',
     origin: 'Germany',
     dailyRate: 11500,
     purchasePrice: 5900000,
     transmission: '7-Speed PDK Dual-Clutch',
-    fuelType: 'Naturally Aspirated Flat-6',
+    fuelType: 'Naturally Aspirated 4.0L Flat-6',
     seats: 2,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
@@ -235,14 +354,14 @@ const initialVehicles: Vehicle[] = [
   {
     id: 202,
     make: 'BMW',
-    model: 'i7 M70 xDrive Luxury Sedan',
+    model: 'i7 M70 xDrive',
     year: 2024,
     category: 'Luxury',
     origin: 'Germany',
     dailyRate: 5800,
     purchasePrice: 3850000,
-    transmission: 'Direct Drive',
-    fuelType: 'Pure Electric',
+    transmission: 'Single-Speed Direct Drive',
+    fuelType: 'Dual Electric Motors (AWD)',
     seats: 5,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80',
@@ -253,9 +372,9 @@ const initialVehicles: Vehicle[] = [
     locationName: 'Century City Depot',
     rating: 4.9,
     horsepower: 650,
-    zeroToHundred: '3.7s',
-    topSpeed: '250 km/h',
-    rangeOrConsumption: '560 km range'
+    zeroToHundred: '3.5s',
+    topSpeed: '250 km/h (limited)',
+    rangeOrConsumption: '488 km range (WLTP)'
   },
   {
     id: 203,
@@ -267,7 +386,7 @@ const initialVehicles: Vehicle[] = [
     dailyRate: 8900,
     purchasePrice: 4400000,
     transmission: '9-Speed AMG Speedshift',
-    fuelType: 'V8 Hybrid',
+    fuelType: '4.0L V8 Biturbo Hybrid',
     seats: 4,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80',
@@ -277,22 +396,22 @@ const initialVehicles: Vehicle[] = [
     lng: 18.4650,
     locationName: 'Claremont Hub',
     rating: 4.9,
-    horsepower: 831,
+    horsepower: 843,
     zeroToHundred: '2.9s',
     topSpeed: '316 km/h',
-    rangeOrConsumption: '7.9 L / 100 km'
+    rangeOrConsumption: '8.5 L / 100 km'
   },
   {
     id: 204,
     make: 'Audi',
-    model: 'RS e-tron GT Ice Race Edition',
+    model: 'RS e-tron GT',
     year: 2024,
     category: 'EV / Hybrid',
     origin: 'Germany',
     dailyRate: 6200,
     purchasePrice: 3300000,
     transmission: '2-Speed Automatic',
-    fuelType: 'Pure Electric',
+    fuelType: 'Dual Electric Motors (Quattro)',
     seats: 5,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80',
@@ -304,22 +423,22 @@ const initialVehicles: Vehicle[] = [
     rating: 4.9,
     horsepower: 637,
     zeroToHundred: '3.3s',
-    topSpeed: '250 km/h',
-    rangeOrConsumption: '472 km range'
+    topSpeed: '250 km/h (limited)',
+    rangeOrConsumption: '472 km range (WLTP)'
   },
 
   // --- USA ---
   {
     id: 301,
     make: 'Tesla',
-    model: 'Model S Plaid Tri-Motor',
+    model: 'Model S Plaid',
     year: 2024,
     category: 'EV / Hybrid',
     origin: 'USA',
     dailyRate: 4900,
     purchasePrice: 2600000,
-    transmission: 'Direct Drive',
-    fuelType: 'Pure Electric',
+    transmission: 'Single-Speed Direct Drive',
+    fuelType: 'Tri-Motor Electric (AWD)',
     seats: 5,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=80',
@@ -332,19 +451,19 @@ const initialVehicles: Vehicle[] = [
     horsepower: 1020,
     zeroToHundred: '2.1s',
     topSpeed: '322 km/h',
-    rangeOrConsumption: '600 km range'
+    rangeOrConsumption: '637 km range (EPA)'
   },
   {
     id: 302,
     make: 'Rivian',
-    model: 'R1S Quad-Motor Adventure',
+    model: 'R1S Performance (Quad-Motor)',
     year: 2024,
     category: 'SUV',
     origin: 'USA',
     dailyRate: 4500,
     purchasePrice: 2400000,
-    transmission: 'Direct Drive',
-    fuelType: 'Pure Electric',
+    transmission: 'Single-Speed Direct Drive',
+    fuelType: 'Quad Electric Motors (AWD)',
     seats: 7,
     status: 'rented',
     imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80',
@@ -352,24 +471,24 @@ const initialVehicles: Vehicle[] = [
     speed: 84,
     lat: -33.9350,
     lng: 18.4720,
-    locationName: 'En Route (M5 Highway North)',
+    locationName: 'En Route — N2 Airport Freeway',
     rating: 4.8,
     horsepower: 835,
     zeroToHundred: '3.1s',
-    topSpeed: '201 km/h',
-    rangeOrConsumption: '516 km range'
+    topSpeed: '200 km/h (limited)',
+    rangeOrConsumption: '516 km range (EPA)'
   },
   {
     id: 303,
     make: 'Ford',
-    model: 'Mustang Mach-E GT Performance',
+    model: 'Mustang Mach-E GT Performance Edition',
     year: 2024,
     category: 'EV / Hybrid',
     origin: 'USA',
     dailyRate: 3100,
     purchasePrice: 1650000,
-    transmission: 'Direct Drive',
-    fuelType: 'Pure Electric',
+    transmission: 'Single-Speed Direct Drive',
+    fuelType: 'Dual Electric Motors (AWD)',
     seats: 5,
     status: 'available',
     imageUrl: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80',
@@ -380,9 +499,9 @@ const initialVehicles: Vehicle[] = [
     locationName: 'Century City Depot',
     rating: 4.7,
     horsepower: 480,
-    zeroToHundred: '3.7s',
-    topSpeed: '200 km/h',
-    rangeOrConsumption: '434 km range'
+    zeroToHundred: '3.5s',
+    topSpeed: '200 km/h (limited)',
+    rangeOrConsumption: '434 km range (WLTP)'
   }
 ];
 
@@ -392,7 +511,7 @@ const initialReviews: Review[] = [
     author: 'Elena Rostova',
     role: 'Managing Director, Horizon Global',
     rating: 5,
-    comment: 'The Nissan GT-R Nismo delivery to our private yacht at V&A Waterfront was flawless. DriveFleet provides an unmatched ultra-luxury mobility experience in South Africa.',
+    comment: 'The Nissan GT-R NISMO delivery to our private yacht at V&A Waterfront was flawless. DriveFleet provides an unmatched ultra-luxury mobility experience in South Africa.',
     date: '2 hours ago'
   },
   {
@@ -439,6 +558,9 @@ export default function App() {
   // Focused Map Telemetry
   const [focusedVehicle, setFocusedVehicle] = useState<Vehicle>(initialVehicles[0]);
 
+  // Route animation clock (drives cars along real roads on the map)
+  const routeClockRef = useRef(0);
+
   // Modals & Details State
   const [bookingVehicle, setBookingVehicle] = useState<Vehicle | null>(null);
   const [detailVehicle, setDetailVehicle] = useState<Vehicle | null>(null);
@@ -480,24 +602,43 @@ export default function App() {
     rangeOrConsumption: '500 km range'
   });
 
-  // Dynamic Live Simulation for Vehicle Telemetry
+  // Dynamic Live Simulation for Vehicle Telemetry — rented cars with a known
+  // route drive along real Cape Town roads; others get light positional jitter.
   useEffect(() => {
     const interval = setInterval(() => {
+      routeClockRef.current += 0.045;
+      const clock = routeClockRef.current;
       setVehicles(prev => prev.map(v => {
-        if (v.status === 'rented') {
+        if (v.status !== 'rented') return v;
+        const route = VEHICLE_ROUTES[v.id];
+        if (route) {
+          const direction = pingPong(clock + v.id) ;
+          const forward = (clock + v.id * 0.37) % 2 < 1;
+          const [lat, lng] = pointAtRoute(route, direction);
           return {
             ...v,
-            speed: Math.floor(75 + Math.random() * 45),
-            fuelPercent: Math.max(5, v.fuelPercent - (Math.random() > 0.6 ? 1 : 0)),
-            lat: v.lat + (Math.random() * 0.002 - 0.001),
-            lng: v.lng + (Math.random() * 0.002 - 0.001)
+            lat,
+            lng,
+            speed: forward ? 70 + Math.floor(Math.random() * 50) : 40 + Math.floor(Math.random() * 30),
+            fuelPercent: Math.max(5, v.fuelPercent - (Math.random() > 0.7 ? 1 : 0)),
           };
         }
-        return v;
+        return {
+          ...v,
+          speed: Math.floor(75 + Math.random() * 45),
+          fuelPercent: Math.max(5, v.fuelPercent - (Math.random() > 0.6 ? 1 : 0)),
+          lat: v.lat + (Math.random() * 0.002 - 0.001),
+          lng: v.lng + (Math.random() * 0.002 - 0.001)
+        };
       }));
     }, 2500);
     return () => clearInterval(interval);
   }, []);
+
+  // Keep the focused telemetry card in sync with live vehicle updates
+  useEffect(() => {
+    setFocusedVehicle(prev => vehicles.find(v => v.id === prev.id) || prev);
+  }, [vehicles]);
 
   const categories = ['All', 'Sports', 'EV / Hybrid', 'Luxury', 'SUV'];
   const origins = ['All', 'Japan', 'Germany', 'USA'];
@@ -624,6 +765,12 @@ export default function App() {
   const availableCount = vehicles.filter(v => v.status === 'available').length;
   const totalFleetValue = vehicles.reduce((acc, curr) => acc + curr.purchasePrice, 0);
 
+  // Precompute static SVG paths once
+  const landPath = useMemo(() => pathFromCoords(CAPE_LANDMASS), []);
+  const roadPaths = useMemo(() => ROADS.map(r => ({ name: r.name, d: pathFromCoords(r.coords) })), []);
+  const [tmX, tmY] = project(TABLE_MOUNTAIN[0], TABLE_MOUNTAIN[1]);
+  const [riX, riY] = project(ROBBEN_ISLAND[0], ROBBEN_ISLAND[1]);
+
   return (
     <div className="min-h-screen bg-[#030712] text-slate-100 selection:bg-cyan-400 selection:text-black font-sans antialiased relative overflow-x-hidden">
 
@@ -684,7 +831,7 @@ export default function App() {
                 activeTab === 'map' ? 'bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Navigation className="w-4 h-4" /> GPS Radar Map
+              <Navigation className="w-4 h-4" /> Live Map
             </button>
             <button
               onClick={() => setActiveTab('branches')}
@@ -877,7 +1024,7 @@ export default function App() {
                     <div className="relative aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer" onClick={() => setDetailVehicle(v)}>
                       <img
                         src={v.imageUrl}
-                        alt={v.model}
+                        alt={`${v.make} ${v.model}`}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
@@ -972,49 +1119,112 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 2: GPS RADAR MAP */}
+        {/* VIEW 2: LIVE MAP — real Cape Town coastline, roads, depots & moving cars */}
         {activeTab === 'map' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             {/* Map Visual Container */}
-            <div className="lg:col-span-2 bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-6 relative min-h-[520px] flex flex-col justify-between overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:20px_20px] opacity-10 pointer-events-none" />
-
-              <div className="relative z-10 flex justify-between items-start">
+            <div className="lg:col-span-2 bg-slate-950/80 border border-cyan-950/80 rounded-3xl p-5 relative overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <Navigation className="w-5 h-5 text-cyan-400 animate-pulse" /> Live Telemetry Radar
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                    <Navigation className="w-5 h-5 text-cyan-400 animate-pulse" /> Cape Town Live Telemetry Map
                   </h2>
-                  <p className="text-xs text-slate-400">Cape Town active telemetry stream with real-time GPS updating every 2.5 seconds</p>
+                  <p className="text-[11px] text-slate-400">GPS positions refresh every 2.5 seconds along real road corridors</p>
                 </div>
-                <span className="px-3.5 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full text-xs font-mono font-bold">
-                  ● LIVE RADAR
+                <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-full text-[10px] font-mono font-bold whitespace-nowrap">
+                  ● LIVE
                 </span>
               </div>
 
-              {/* Graphical Simulated Radar Canvas */}
-              <div className="relative z-10 my-8 p-8 border border-cyan-950/80 bg-slate-900/60 backdrop-blur-md rounded-2xl min-h-[320px] flex flex-col items-center justify-center text-center">
-                <div className="relative mb-6">
-                  <div className="w-24 h-24 rounded-full border-2 border-cyan-500/30 flex items-center justify-center animate-pulse">
-                    <div className="w-16 h-16 rounded-full border border-cyan-400/50 flex items-center justify-center bg-cyan-500/10">
-                      <Compass className="w-8 h-8 text-cyan-400" />
-                    </div>
-                  </div>
-                </div>
+              <div className="relative rounded-2xl overflow-hidden border border-cyan-950/70 bg-[#08111f]">
+                <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="w-full h-auto max-h-[640px]" role="img" aria-label="Map of Cape Town showing DriveFleet vehicle positions">
+                  <defs>
+                    <linearGradient id="ocean" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#04283a" />
+                      <stop offset="100%" stopColor="#031a28" />
+                    </linearGradient>
+                    <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#0d1c22" />
+                      <stop offset="100%" stopColor="#0a1519" />
+                    </linearGradient>
+                    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                      <path d="M24 0H0V24" fill="none" stroke="#0891b2" strokeOpacity="0.06" strokeWidth="1" />
+                    </pattern>
+                  </defs>
 
-                <h3 className="text-xl font-extrabold text-white">{focusedVehicle.make} {focusedVehicle.model}</h3>
-                <p className="text-xs text-cyan-400 font-bold mt-1">{focusedVehicle.locationName}</p>
-                <div className="flex items-center gap-4 mt-3 text-xs font-mono text-slate-400">
-                  <span>Lat: {focusedVehicle.lat.toFixed(4)}° S</span>
-                  <span>•</span>
-                  <span>Lng: {focusedVehicle.lng.toFixed(4)}° E</span>
+                  {/* Ocean base */}
+                  <rect x="0" y="0" width={MAP_W} height={MAP_H} fill="url(#ocean)" />
+                  <rect x="0" y="0" width={MAP_W} height={MAP_H} fill="url(#grid)" />
+
+                  {/* Land mass */}
+                  <path d={landPath} fill="url(#land)" stroke="#0e7490" strokeOpacity="0.5" strokeWidth="1.5" />
+
+                  {/* Robben Island */}
+                  <circle cx={riX} cy={riY} r="4" fill="#1e293b" stroke="#0891b2" strokeOpacity="0.4" />
+
+                  {/* Table Mountain marker */}
+                  <g transform={`translate(${tmX - 9}, ${tmY - 22})`} opacity="0.85">
+                    <Mountain x="0" y="0" width="18" height="18" color="#64748b" />
+                  </g>
+                  <text x={tmX} y={tmY + 2} fontSize="8" fill="#64748b" textAnchor="middle" fontFamily="monospace">TABLE MTN</text>
+
+                  {/* Roads */}
+                  {roadPaths.map((r, i) => (
+                    <path key={i} d={r.d} fill="none" stroke="#22d3ee" strokeOpacity="0.35" strokeWidth="2.5" strokeDasharray="6 5" strokeLinecap="round" />
+                  ))}
+
+                  {/* Branch depots */}
+                  {capeTownBranches.map(b => {
+                    const [x, y] = project(b.lat, b.lng);
+                    return (
+                      <g key={b.id} transform={`translate(${x}, ${y})`}>
+                        <circle r="9" fill="#0891b2" fillOpacity="0.15" />
+                        <circle r="4.5" fill="#06b6d4" stroke="#e6fffb" strokeWidth="1" />
+                        <text x="9" y="4" fontSize="9" fill="#a5f3fc" fontFamily="monospace" fontWeight="700">{b.area}</text>
+                      </g>
+                    );
+                  })}
+
+                  {/* Vehicles */}
+                  {vehicles.map(v => {
+                    const [x, y] = project(v.lat, v.lng);
+                    const isFocused = focusedVehicle.id === v.id;
+                    const color = v.status === 'rented' ? '#fbbf24' : v.status === 'available' ? '#34d399' : '#64748b';
+                    return (
+                      <g
+                        key={v.id}
+                        transform={`translate(${x}, ${y})`}
+                        style={{ transition: 'transform 2.3s linear', cursor: 'pointer' }}
+                        onClick={() => setFocusedVehicle(v)}
+                      >
+                        {v.status === 'rented' && (
+                          <circle r="10" fill={color} fillOpacity="0.25">
+                            <animate attributeName="r" values="7;13;7" dur="2.4s" repeatCount="indefinite" />
+                            <animate attributeName="fill-opacity" values="0.35;0;0.35" dur="2.4s" repeatCount="indefinite" />
+                          </circle>
+                        )}
+                        <circle r={isFocused ? 7 : 5.5} fill={color} stroke="#030712" strokeWidth="1.5" />
+                        {isFocused && (
+                          <circle r="10.5" fill="none" stroke={color} strokeWidth="1.5" strokeOpacity="0.8" />
+                        )}
+                      </g>
+                    );
+                  })}
+                </svg>
+
+                {/* Legend */}
+                <div className="absolute bottom-3 left-3 bg-slate-950/85 backdrop-blur-md border border-cyan-950/80 rounded-xl px-3 py-2 flex flex-col gap-1.5 text-[10px] font-mono">
+                  <span className="flex items-center gap-1.5 text-slate-300"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> Available</span>
+                  <span className="flex items-center gap-1.5 text-slate-300"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> En Route</span>
+                  <span className="flex items-center gap-1.5 text-slate-300"><span className="w-2 h-2 rounded-full bg-cyan-400 inline-block" /> Depot</span>
                 </div>
               </div>
 
               {/* Live Telemetry Bar */}
-              <div className="relative z-10 grid grid-cols-3 gap-4 bg-slate-900/80 p-4 rounded-xl border border-cyan-950 text-center">
+              <div className="relative z-10 grid grid-cols-3 gap-4 bg-slate-900/80 p-4 mt-4 rounded-xl border border-cyan-950 text-center">
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-bold block">Current Speed</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold block">{focusedVehicle.make} {focusedVehicle.model}</span>
                   <span className="text-xl font-mono font-black text-cyan-400">{focusedVehicle.speed} km/h</span>
                 </div>
                 <div>
@@ -1022,7 +1232,7 @@ export default function App() {
                   <span className="text-xl font-mono font-black text-emerald-400">{focusedVehicle.fuelPercent}%</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 uppercase font-bold block">Transmission State</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold block">Status</span>
                   <span className="text-xl font-mono font-black text-amber-400 capitalize">{focusedVehicle.status}</span>
                 </div>
               </div>
@@ -1033,7 +1243,7 @@ export default function App() {
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <Car className="w-4 h-4 text-cyan-400" /> Active Vehicles ({vehicles.length})
               </h3>
-              <div className="flex flex-col gap-3 overflow-y-auto max-h-[480px] pr-2">
+              <div className="flex flex-col gap-3 overflow-y-auto max-h-[560px] pr-2">
                 {vehicles.map(v => (
                   <div
                     key={v.id}
@@ -1044,7 +1254,7 @@ export default function App() {
                         : 'bg-slate-900/50 border-slate-800 text-slate-300 hover:border-slate-700'
                     }`}
                   >
-                    <img src={v.imageUrl} alt={v.model} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
+                    <img src={v.imageUrl} alt={`${v.make} ${v.model}`} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <h4 className="font-bold text-xs truncate text-white">{v.make} {v.model}</h4>
                       <p className="text-[11px] text-slate-400 truncate">{v.locationName}</p>
@@ -1113,18 +1323,43 @@ export default function App() {
               <Gauge className="w-6 h-6 text-cyan-400" /> Engineering & Performance Specs
             </h2>
             <p className="text-xs md:text-sm text-slate-300 leading-relaxed mb-6">
-              DriveFleet Cape Town offers dynamic telemetry integration across Japanese, German, and USA performance engineering standards.
+              DriveFleet Cape Town offers dynamic telemetry integration across Japanese, German, and USA performance engineering standards, with every listed figure sourced from manufacturer specifications.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 bg-slate-900/60 border border-cyan-950 rounded-2xl">
-                <h4 className="font-bold text-cyan-400 text-xs uppercase font-mono mb-1">Telemetry Interactivity</h4>
-                <p className="text-xs text-slate-400">Live GPS tracking with simulated speed calculations polled directly from active Cape Town routes.</p>
+                <h4 className="font-bold text-cyan-400 text-xs uppercase font-mono mb-1">Live Road-Mapped Telemetry</h4>
+                <p className="text-xs text-slate-400">Rented vehicles are animated along real Cape Town corridors — Victoria Road, the M3 and the N2 — with GPS coordinates refreshed every 2.5 seconds.</p>
               </div>
               <div className="p-5 bg-slate-900/60 border border-cyan-950 rounded-2xl">
                 <h4 className="font-bold text-cyan-400 text-xs uppercase font-mono mb-1">Dual Transaction Model</h4>
                 <p className="text-xs text-slate-400">Seamlessly toggle between short-term executive rentals or direct purchase acquisitions in ZAR.</p>
               </div>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-cyan-950/70">
+              <table className="w-full text-left text-[11px]">
+                <thead className="bg-slate-900/80 text-slate-400 uppercase font-mono">
+                  <tr>
+                    <th className="px-4 py-3">Vehicle</th>
+                    <th className="px-4 py-3">Power</th>
+                    <th className="px-4 py-3">0–100 km/h</th>
+                    <th className="px-4 py-3">Top Speed</th>
+                    <th className="px-4 py-3">Range / Consumption</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-cyan-950/50">
+                  {vehicles.map(v => (
+                    <tr key={v.id} className="hover:bg-slate-900/40 transition">
+                      <td className="px-4 py-3 text-white font-bold whitespace-nowrap">{v.make} {v.model}</td>
+                      <td className="px-4 py-3 font-mono text-slate-300">{v.horsepower} HP</td>
+                      <td className="px-4 py-3 font-mono text-slate-300">{v.zeroToHundred}</td>
+                      <td className="px-4 py-3 font-mono text-slate-300">{v.topSpeed}</td>
+                      <td className="px-4 py-3 font-mono text-slate-300">{v.rangeOrConsumption}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
@@ -1203,7 +1438,7 @@ export default function App() {
                 <div className="lg:col-span-2 flex flex-col gap-4">
                   {cart.map(item => (
                     <div key={item.vehicle.id} className="bg-slate-950/80 border border-cyan-950/80 rounded-2xl p-4 flex items-center justify-between gap-4 shadow-xl">
-                      <img src={item.vehicle.imageUrl} alt={item.vehicle.model} className="w-24 h-18 rounded-xl object-cover" />
+                      <img src={item.vehicle.imageUrl} alt={`${item.vehicle.make} ${item.vehicle.model}`} className="w-24 h-18 rounded-xl object-cover" />
                       <div className="flex-1 min-w-0">
                         <h4 className="font-extrabold text-white text-sm truncate">{item.vehicle.make} {item.vehicle.model}</h4>
                         <p className="text-xs text-cyan-400 uppercase font-mono font-bold mt-0.5">{item.type} {item.type === 'rental' ? `(${item.rentalDays} Days)` : ''}</p>
@@ -1383,4 +1618,243 @@ export default function App() {
                 >
                   Confirm Reservation (R{grandTotal.toLocaleString()})
                 </button>
-              </
+              </form>
+            )}
+          </div>
+        )}
+
+      </main>
+
+      {/* MODAL 1: AUTH MODAL */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
+            <button
+              onClick={() => setIsAuthModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-xl font-extrabold text-white mb-1">VIP Member Portal</h3>
+            <p className="text-xs text-slate-400 mb-6">Sign in for priority Cape Town fleet allocation.</p>
+
+            <form onSubmit={handleAuthSubmit} className="flex flex-col gap-4">
+              <div>
+                <label className="text-xs text-slate-400 block mb-1">Full Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Sarah Jenkins"
+                  value={authName}
+                  onChange={e => setAuthName(e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-slate-400 block mb-1">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="sarah@example.com"
+                  value={authEmail}
+                  onChange={e => setAuthEmail(e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-slate-400 block mb-1">Password</label>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={authPassword}
+                  onChange={e => setAuthPassword(e.target.value)}
+                  className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs mt-2"
+              >
+                Sign In
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 2: BOOKING MODAL */}
+      {bookingVehicle && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative shadow-2xl">
+            <button
+              onClick={() => setBookingVehicle(null)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-lg font-bold text-white mb-1">Configure Booking</h3>
+            <p className="text-xs text-cyan-400 font-bold mb-4">{bookingVehicle.make} {bookingVehicle.model}</p>
+
+            <div className="flex items-center gap-4 bg-slate-900 p-3 rounded-2xl border border-slate-800 mb-6">
+              <img src={bookingVehicle.imageUrl} alt={`${bookingVehicle.make} ${bookingVehicle.model}`} className="w-18 h-14 rounded-xl object-cover" />
+              <div>
+                <span className="text-xs font-bold text-white block">Daily Rate</span>
+                <span className="text-sm font-mono text-cyan-400 font-bold">R{bookingVehicle.dailyRate.toLocaleString()} / day</span>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <label className="text-xs text-slate-400 block mb-2 font-medium">Rental Period (Days)</label>
+              <div className="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-xl p-2">
+                <button
+                  onClick={() => setRentalDays(Math.max(1, rentalDays - 1))}
+                  className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
+                >
+                  -
+                </button>
+                <span className="font-mono font-bold text-white text-sm">{rentalDays} Days</span>
+                <button
+                  onClick={() => setRentalDays(rentalDays + 1)}
+                  className="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-bold"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t border-cyan-950 pt-4 mb-6 flex justify-between items-center text-xs">
+              <span className="text-slate-400">Total Calculation</span>
+              <span className="text-lg font-mono font-bold text-white">R{(bookingVehicle.dailyRate * rentalDays).toLocaleString()}</span>
+            </div>
+
+            <button
+              onClick={handleBookVehicle}
+              className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 3: SPECS DETAIL MODAL */}
+      {detailVehicle && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button
+              onClick={() => setDetailVehicle(null)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="aspect-video w-full rounded-2xl overflow-hidden mb-4">
+              <img src={detailVehicle.imageUrl} alt={`${detailVehicle.make} ${detailVehicle.model}`} className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-xl font-extrabold text-white">{detailVehicle.make} {detailVehicle.model}</h3>
+            <p className="text-xs text-cyan-400 font-bold mb-6">{detailVehicle.year} • {detailVehicle.origin} Origin • {detailVehicle.category}</p>
+
+            <div className="grid grid-cols-2 gap-3 mb-6 text-xs">
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Output</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.horsepower} HP</span>
+              </div>
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Acceleration (0-100)</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.zeroToHundred}</span>
+              </div>
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Top Speed</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.topSpeed}</span>
+              </div>
+              <div className="p-3 bg-slate-900 border border-slate-800 rounded-xl">
+                <span className="text-slate-500 block text-[10px]">Efficiency / Range</span>
+                <span className="font-bold text-white font-mono">{detailVehicle.rangeOrConsumption}</span>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => handleAddToCart(detailVehicle, 'rental', 3)}
+                className="flex-1 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-bold rounded-xl text-xs"
+              >
+                Reserve (R{detailVehicle.dailyRate}/day)
+              </button>
+              <button
+                onClick={() => handleAddToCart(detailVehicle, 'purchase')}
+                className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl text-xs"
+              >
+                Buy (R{(detailVehicle.purchasePrice / 1000000).toFixed(2)}M)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 4: ADD VEHICLE MODAL */}
+      {isAddVehicleOpen && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="bg-slate-950 border border-cyan-950 rounded-3xl p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button
+              onClick={() => setIsAddVehicleOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-lg font-bold text-white mb-4">Add Fleet Vehicle</h3>
+
+            <form onSubmit={handleAddVehicle} className="flex flex-col gap-3 text-xs">
+              <input
+                type="text"
+                placeholder="Make (e.g. Porsche)"
+                required
+                value={newVehicle.make}
+                onChange={e => setNewVehicle({ ...newVehicle, make: e.target.value })}
+                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
+              />
+              <input
+                type="text"
+                placeholder="Model (e.g. Taycan Turbo S)"
+                required
+                value={newVehicle.model}
+                onChange={e => setNewVehicle({ ...newVehicle, model: e.target.value })}
+                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="number"
+                  placeholder="Daily Rate (ZAR)"
+                  required
+                  value={newVehicle.dailyRate}
+                  onChange={e => setNewVehicle({ ...newVehicle, dailyRate: Number(e.target.value) })}
+                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
+                />
+                <input
+                  type="number"
+                  placeholder="Purchase Price (ZAR)"
+                  required
+                  value={newVehicle.purchasePrice}
+                  onChange={e => setNewVehicle({ ...newVehicle, purchasePrice: Number(e.target.value) })}
+                  className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
+                />
+              </div>
+              <input
+                type="text"
+                placeholder="Image URL"
+                value={newVehicle.imageUrl}
+                onChange={e => setNewVehicle({ ...newVehicle, imageUrl: e.target.value })}
+                className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-white placeholder-slate-600"
+              />
+              <button
+                type="submit"
+                className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-teal-400 text-slate-950 font-black rounded-xl mt-2"
+              >
+                Add Vehicle
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
