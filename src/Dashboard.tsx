@@ -43,5 +43,11 @@ export default function Dashboard() {
       </div>
 
     </div>
+
+    <div className="grid lg:grid-cols-3 gap-8 mt-12">
+  <BookingEngine />
+  <CustomerPortal />
+  <WishlistPanel />
+</div>
   );
 }
